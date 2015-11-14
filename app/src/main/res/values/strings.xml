@@ -1,0 +1,183 @@
+<resources>
+    <string name="app_name">Blue Buy</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="ingredients_label">Ingredients</string>
+    <string name="recipe_label">Recipe</string>
+    <string name="back_to_the_top">Back to the top</string>
+
+
+    <string name="delete_confirmation">Na pewno chcesz usunąć kategorię?</string>
+    <string name="delete_title">Delete category</string>
+    <string name="recipe_removed">Recipe has been deleted</string>
+    <string name="all_removed">All recipes deleted</string>
+    <string name="all_removed_what_now">Youre going to starve</string>
+
+    <string name="recipe_title">Crepe bundles with zuchini and camembert</string>
+    <string name="recipe_title2">Cambodian style fish with spicy tomato sauce</string>
+    <string name="recipe_title3">Prawn &amp; Ham Aglio Oli</string>
+    <string name="recipe_title4">Rhubarb &amp; strawberries muffins</string>
+    <string name="recipe_title5">Chocolate and strawberry cake</string>
+    <string name="recipe_title6">Thai beef curry</string>
+    <string name="recipe_title7">Strawberry Mochi</string>
+    <string name="recipe_title8">Best Nachos Ever</string>
+    <string name="recipe_title9">Edamame Hummus</string>
+    <string name="recipe_title10">Roasted black pepper chicken</string>
+
+    <string name="category">1. Mix all ingredientsResId for crape. \n2. Fry in non-sticking frying pan. \n3. Cool down ready crepes and set aside. \n4. To assemble bundles, divide filling between crepes, start with grilled zucchini, add tomato, top with slice of camembert cheese and tablespoon of yoghurt, gather edges of crepe together and tie with spring onion. \n5. Once bundles are ready place them in frying pan again to heat them and melt camembert inside. \n6. Serve as appetizer or light lunch.</string>
+    <string name="recipe2">Sprinkle fish with cornstarch.\n
+Heat 2 tablespoon of oil and fry fish, when it\'s golden brown remove from wok.\n
+Clean wok, heat 1 tablespoon of oil and fry garlic and onion about 1 minute, add celery, dried chili and tomato, stir and fry 4 minutes.\n
+Add fish sauce, soy sauce, sugar and black pepper.\n
+Pour tomato sauce over fish and garnish with spring onion, basil.</string>
+    <string name="recipe3">Stir-fry everything and voila - a simple and yummy meal!</string>
+    <string name="recipe4">In a large bowl, combine flour, baking powder and salt.\n
+In separate bowl mix milk, oil, vanilla, egg and sugar.\n
+Add dry ingredients to moist ones bit by bit, stir well.\n
+Fold in walnuts, rhubarb and strawberries.\n
+Divide batter between muffin cups lined with paper cups (12 pcs).\n
+Bake for 20 - 25 minutes, until light golden brown (in preheated oven, in 180 C degrees).</string>
+    <string name="recipe5">Whip whites till they turn into firm foam. Add sugar bit by bit, keep whipping, add yolks one by
+one, continue to whip.\n
+Sift flours and cocoa powder, add to eggs mixture bit by bit.\n
+Bake in preheated oven in 180 C degrees, about 30 minutes.\n
+Meanwhile whip cream with sugar and mix with mascarpone. Refrigerate.\n
+Blend 200 grams of strawberries with sugar.\n
+Mix punch till sugar dissolves.\n
+Cool sponge cake, slice horizontally into 3 layers.\n
+Sprinkle each layer with punch.\n
+To assemble: Place bottom sponge cake layer on serving plate, sprinkle with half of strawberries slices, pour with half of strawberry mouse, smear with 1/3 of cream. Place second layer of sponge cake, repeat the following steps. Atop with last layer of sponge cake, smear top and sides with cream.\n
+Garnish with chocolate shavings and strawberries.</string>
+    <string name="recipe6">Pour 150 ml of coconut milk into wok, add red curry paste, bring to boil, cook till oil appears on
+the surface.\n
+Add beef, mix well, reduce heat, simmer 20 minutes.\n
+Add remaining coconut milk, bring to boil and add vegetables. Keep simmering till vegetables are cooked.\n
+Serve with jasmine rice, garnished with lemon and basil leaves.</string>
+    <string name="recipe7">These were mochi I made for my grade-school students, to whom I was teaching Japanese, on their last
+day of class. I wanted something Japanese and easy, and since I don\'t have a steamer, I decided to try making mochi in
+the microwave.\n
+It was super easy, but the stuff is still difficult for me to handle. Putting mochiko everywhere (hands, work surface, not to mention my clothes) made it much easier.\n
+Combine water, mochiko and sugar and stir until smooth. Coat a microwave safe container with oil or pam spray and pour the batter in a relatively shallow layer. Cover with air-tight lid or plastic wrap and microwave ~7 minutes on high or until done.\n
+Put on mochiko-covered surface and wait to cool.\n
+To make the mochi, pull off a small piece of dough, roll it into a ball and flatten. Then take some strawberry pieces, put them
+        in the center of the round and pinch it closed so you have a nice strawberry filled ball (hopefully). Voila. I also
+        made some \'taco\' shaped ones for me and my fellow teachers.\n
+Made ~20 pieces </string>
+    <string name="recipe8">These nachos are so delicious and perfect for a party!\n
+To Make:\n
+Preheat the oven to 375F degrees.\n
+In a medium size casserole dish, spread an even layer of chips lining the bottom of the dish.  Drizzle nacho cheese sauce evenly over the chips.  Then, sprinkle some of the tomatoes, olives, sliced onions, corn, jalepenos, and cilantro over the chips.\n
+Then add another layer of chips.  Pour the rest of the cheese sauce over these chips.  Then sprinkle the rest of the tomatoes, olives, sliced onions, corn, jalepenos, cilantro, and the tsp of ground cumin over the chips as well.\n
+Bake in the oven for about 10 minutes or until cheese sauce is hot.  Top with salsa and sour cream.</string>
+    <string name="recipe9">Combine soybeans and 1/4 cup water in a small saucepan; bring to a boil. Reduce heat, and simmer 10
+minutes. Drain. Combine soybeans, oil, juice, salt, garlic, and hot pepper sauce in a food processor; process until
+smooth. Add parsley, and process until blended. Serve with pita wedges.</string>
+    <string name="recipe10">1. Wash chicken, dry it up with towel.\n
+2. Put the chopped ingredients into the chicken cavity. Also dash in some pepper.\n
+3. Mix the rest of ingredients and rub over chicken and also inside of the chicken.\n
+4. Let it marinate for 2 hours. Heat the oven to 250 C and roast chicken till brown for 40 mins.\n
+5. With the remaining gravy , bring to boil by adding a piece of star anise and a stick of cinnamon.\n
+6. Cut up chicken and put on serving plate, Pour sauce over and garnish with vegetables and sesame seeds.</string>
+
+    <string name="ingredients">Crepe batter: \n- 100 grams of wheat flour \n- 250 ml of milk \n- 1 egg \n- 1 tablespoon of oil \n\nFilling: \n- 1 zucchini, sliced and grilled \n- 1 tomato, skin removed, cubed \n- 1/2 cup of greek yoghurt \n- 100 grams of camembert cheese, sliced \n- spring onion, blanched in boiling water</string>
+    <string name="ingredients2">1 gilt-head (sea) bream, cleaned and pat dry with paper towel\n
+2 tablespoons of cornstarch\n
+3 tablespoons of vegetable oil\n
+1 clove of garlic, minced\n
+1/2  onion, diced\n
+1 stalk of celery, sliced\n
+1 tomato, cubed\n
+1 tablespoon fish sauce\n
+1 teaspoon soy sauce\n
+1/2 tablespoon sugar\n
+2 dried hot chili peppers, sliced\n
+Dash of black pepper\n
+spring onion and basil leaves for garnish</string>
+    <string name="ingredients3">Prawns\n
+Honey Baked Ham\n
+Green Capsicum\n
+Grounded White Pepper\n
+Light Soya Sauce</string>
+    <string name="ingredients4">2,5 cup of flour\n
+1/2 cup of brown sugar\n
+3 teaspoons of baking powder\n
+1/2 teaspoon of salt\n
+1 cup of milk\n
+1/4 cup of oil\n
+1/2 teaspoon of vanilla oil\n
+1 egg, beaten\n
+1 cup of finely chopped rhubarb\n
+1 cup of strawberries, cut into quarters\n
+1/2 cup of walnuts</string>
+    <string name="ingredients5">Sponge cake:\n
+4 eggs, yolks and whites separated\n
+200 grams of caster sugar\n
+70 grams of wheat flour\n
+70 grams of potato starch\n
+2 tablespoons of cocoa powder\n
+\n
+Cream:\n
+400 grams of  mascarpone\n
+200 ml of heavy cream, whipped\n
+1/2 cup of sugar\n
+\n
+Strawberry mouse:\n
+200 grams of strawberries\n
+4 tablespoons of sugar\n
+Strawberries layer:\n
+500 grams of strawberries, sliced\n
+Punch:\n
+6 tablespoons of black tea\n
+1 package of vanilla sugar</string>
+    <string name="ingredients6">650 grams of beef, sliced\n
+50 grams of red curry paste\n
+300 ml of coconut milk\n
+1 large tomato, cut into wedges\n
+1/2 of zucchini, sliced\n
+1 potato, sliced\n
+lemon and basil leaves for garnish</string>
+    <string name="ingredients7">2 cups mochiko (glutinous rice flour)\n
+2 cups water\n
+1/2 cup sugar\n
+More mochiko, for dusting\n
+Chopped strawberries\n
+Cooking spray or oil, to avoid stickiness</string>
+    <string name="ingredients8">Tortilla Chips\n
+1/2 cup sliced tomatoes\n
+About 10 sliced black olives\n
+1 1/2 green onion\n
+1 jalepeno\n
+1/2 cup fresh grilled corn\n
+1/4 bunch of roughly chopped cilantro\n
+1/3 cup Nacho cheese sauce\n
+3 tbs salsa\n
+3 tbs sour cream\n
+1 tsp cumin</string>
+    <string name="ingredients9">1 cup frozen, shelled edamame (green soybeans)\n
+1/4 cup water\n
+3 tablespoons olive oil\n
+2 tablespoons fresh lemon juice\n
+1 teaspoon kosher salt\n
+1/2 teaspoon minced garlic\n
+1/8 teaspoon hot pepper sauce\n
+2 tablespoons chopped fresh flat-leaf parsley\n
+6 (6-inch) pitas, cut into 8 wedges</string>
+    <string name="ingredients10">1 spring chicken\n
+1 tbsp black pepper\n
+2 tbsp oyster sauce\n
+1 tbsp sesame oil\n
+1 tbsp tomato ketchup\n
+2 tbsp sugar\n
+1 tsp chilly powder\n
+2 tbsp dark soy sauce\n
+1 tsp 5 spice powder\n
+1 onion-chopped\n
+3 pips garlic-chopped\n
+    \n
+Garnish:\n
+sesame seeds\n
+broccoli-blanch\n
+cherry tomatoes</string>
+    <string name="rating_semicolon">"Rating: "</string>
+    <string name="out_of_ten">/10</string>
+</resources>
