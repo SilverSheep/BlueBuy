@@ -1,14 +1,13 @@
-package pl.cba.marcinbaranowski.bluebuy;
+package pl.cba.marcinbaranowski.bluebuy.model;
 
-import java.io.Serializable;
-
-
-public class Category implements Serializable {
-
+/**
+ * Created by flipflap on 14.11.15.
+ */
+public class Unit {
     private int id;
     private String name;
 
-    public Category(String name) {
+    public Unit(String name) {
         this.name = name;
     }
 

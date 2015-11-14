@@ -1,4 +1,4 @@
-package pl.cba.marcinbaranowski.bluebuy;
+package pl.cba.marcinbaranowski.bluebuy.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,16 +7,20 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import pl.cba.marcinbaranowski.bluebuy.R;
+import pl.cba.marcinbaranowski.bluebuy.model.Category;
+import pl.cba.marcinbaranowski.bluebuy.provider.CategoryProvider;
+
 /**
  * Created by flipflap on 26.10.15.
  */
+//TODO: Prepare class - it's just copied from CategoryListAdapter and renamed
+public class ShoppingListAdapter extends BaseAdapter {
 
-class MyListAdapter extends BaseAdapter {
+    private CategoryProvider categoryProvider;
+    private Context context;
 
-    CategoryProvider categoryProvider;
-    Context context;
-
-    MyListAdapter(Context context) {
+    public ShoppingListAdapter(Context context) {
         this.context = context;
         categoryProvider = new CategoryProvider();
     }

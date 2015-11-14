@@ -1,13 +1,16 @@
-package pl.cba.marcinbaranowski.bluebuy;
+package pl.cba.marcinbaranowski.bluebuy.provider;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import pl.cba.marcinbaranowski.bluebuy.model.Category;
 
 public class CategoryProvider {
 
     private static final List<Category> CATEGORIES = new ArrayList<>();
 
-    public CategoryProvider() {
+    //TODO: Sort alphabetically
+     public CategoryProvider() {
         CATEGORIES.clear();
         CATEGORIES.add(new Category("Słodycze"));
         CATEGORIES.add(new Category("AGD i RTV"));

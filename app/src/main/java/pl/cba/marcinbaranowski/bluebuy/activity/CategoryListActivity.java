@@ -1,4 +1,4 @@
-package pl.cba.marcinbaranowski.bluebuy;
+package pl.cba.marcinbaranowski.bluebuy.activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -12,9 +12,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import pl.cba.marcinbaranowski.bluebuy.adapter.CategoryListAdapter;
+import pl.cba.marcinbaranowski.bluebuy.R;
+import pl.cba.marcinbaranowski.bluebuy.model.Category;
+
 public class CategoryListActivity extends AppCompatActivity {
 
-    final MyListAdapter myListAdapter = new MyListAdapter(this);
+    private final CategoryListAdapter categoryListAdapter = new CategoryListAdapter(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,24 +42,24 @@ public class CategoryListActivity extends AppCompatActivity {
     private void initializeList() {
         final ListView listView = (ListView) findViewById(R.id.category_list);
 
-        listView.setAdapter(myListAdapter);
+        listView.setAdapter(categoryListAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                showEditCategoryDialog(myListAdapter.getItem(i));
+                showEditCategoryDialog(categoryListAdapter.getItem(i));
             }
         });
     }
 
     private void addCategory(Category category) {
-        myListAdapter.addCategory(category);
-        myListAdapter.notifyDataSetChanged();
+        categoryListAdapter.addCategory(category);
+        categoryListAdapter.notifyDataSetChanged();
     }
 
     private void removeCategory(int categoryPosition) {
-        myListAdapter.removeCategory(myListAdapter.getItem(categoryPosition));
-        myListAdapter.notifyDataSetChanged();
+        categoryListAdapter.removeCategory(categoryListAdapter.getItem(categoryPosition));
+        categoryListAdapter.notifyDataSetChanged();
     }
 
     private void showEditCategoryDialog(final Category category) {
