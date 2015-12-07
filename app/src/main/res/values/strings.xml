@@ -6,9 +6,10 @@
     <string name="recipe_label">Recipe</string>
     <string name="back_to_the_top">Back to the top</string>
 
-
-    <string name="delete_confirmation">Na pewno chcesz usunąć kategorię?</string>
-    <string name="delete_title">Delete category</string>
+    <string name="product_delete_confirmation">Na pewno chcesz usunąć produkt?</string>
+    <string name="product_delete_title">Usuń produkt</string>
+    <string name="category_delete_confirmation">Na pewno chcesz usunąć kategorię?</string>
+    <string name="category_delete_title">Usuń kategorię</string>
     <string name="recipe_removed">Recipe has been deleted</string>
     <string name="all_removed">All recipes deleted</string>
     <string name="all_removed_what_now">Youre going to starve</string>

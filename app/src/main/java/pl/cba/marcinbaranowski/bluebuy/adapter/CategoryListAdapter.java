@@ -7,9 +7,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import pl.cba.marcinbaranowski.bluebuy.provider.CategoryProvider;
 import pl.cba.marcinbaranowski.bluebuy.R;
 import pl.cba.marcinbaranowski.bluebuy.model.Category;
+import pl.cba.marcinbaranowski.bluebuy.provider.CategoryProvider;
 
 /**
  * Created by flipflap on 26.10.15.
@@ -22,7 +22,7 @@ public class CategoryListAdapter extends BaseAdapter {
 
     public CategoryListAdapter(Context context) {
         this.context = context;
-        categoryProvider = new CategoryProvider();
+        categoryProvider = new CategoryProvider(context);
     }
 
     @Override

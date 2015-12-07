@@ -134,7 +134,7 @@ public class CategoryListActivity extends AppCompatActivity {
     private void showConfirmationDialog(final int categoryPosition) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        builder.setMessage(R.string.delete_confirmation).setTitle(R.string.delete_title);
+        builder.setMessage(R.string.category_delete_confirmation).setTitle(R.string.category_delete_title);
 
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override

@@ -12,7 +12,8 @@ public class Entry {
     private Unit unit;
     private String comment;
 
-    public Entry(String name) {
+    public Entry(Category category, String name) {
+        this.category = category;
         this.name = name;
     }
 
