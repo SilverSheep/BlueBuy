@@ -18,6 +18,15 @@
         android:layout_height="20dp"
         android:text="Dodaj nowy produkt" />
 
+    <TextView
+        android:id="@+id/add_category_link"
+        style="@style/AddText"
+        android:paddingLeft="10dp"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:text="Dodaj nową kategorię" />
+
     <ExpandableListView
         android:id="@+id/expandable_shopping_list"
         android:layout_height="match_parent"

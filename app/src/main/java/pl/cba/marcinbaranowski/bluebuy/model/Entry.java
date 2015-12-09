@@ -9,7 +9,7 @@ public class Entry {
     private String name;
 
     private int quantity;
-    private Unit unit;
+    private String unit;
     private String comment;
 
     public Entry(Category category, String name) {
@@ -17,7 +17,7 @@ public class Entry {
         this.name = name;
     }
 
-    public Entry(Category category, String name, int quantity, Unit unit, String comment) {
+    public Entry(Category category, String name, int quantity, String unit, String comment) {
         this.category = category;
         this.name = name;
         this.quantity = quantity;
@@ -57,11 +57,11 @@ public class Entry {
         this.quantity = quantity;
     }
 
-    public Unit getUnit() {
+    public String getUnit() {
         return unit;
     }
 
-    public void setUnit(Unit unit) {
+    public void setUnit(String unit) {
         this.unit = unit;
     }
 

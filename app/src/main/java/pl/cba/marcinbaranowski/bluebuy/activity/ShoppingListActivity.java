@@ -31,17 +31,24 @@ public class ShoppingListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.shopping_list);
 
-        initializeAddEntryLink();
+        initializeAddLinks();
         initializeList();
     }
 
-    private void initializeAddEntryLink() {
+    private void initializeAddLinks() {
         final TextView addEntryLink = (TextView) findViewById(R.id.add_entry_link);
+        final TextView addCategoryLink = (TextView) findViewById(R.id.add_category_link);
 
         addEntryLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showNewEntryDialog();
+            }
+        });
+        addCategoryLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showNewCategoryDialog();
             }
         });
     }
@@ -195,6 +202,41 @@ public class ShoppingListActivity extends AppCompatActivity {
 
         dialog.show();
     }
+
+    private void showNewCategoryDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setMessage("Daj nazwę nowej kategorii").setTitle("Dodawanie kategorii");
+
+        final EditText input = new EditText(this);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        input.setLayoutParams(lp);
+        builder.setView(input);
+
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //TODO: ADD Category name validation
+
+                addCategory(new Category(input.getText().toString()));
+                showSuccessfullyAddedDialog();
+            }
+        });
+
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // do nothing
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+
+        dialog.show();
+    }
+
 
     private void showConfirmationDialog(final int entryPosition) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

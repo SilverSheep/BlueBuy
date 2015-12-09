@@ -3,7 +3,6 @@ package pl.cba.marcinbaranowski.bluebuy.provider;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
@@ -51,13 +50,11 @@ public class CategoryProvider {
     }
 
     public int getCategoriesSize() {
-        SQLiteDatabase db = categoryDbHelper.getReadableDatabase();
-
-        return (int) DatabaseUtils.queryNumEntries(db, DBConfig.CATEGORY_TABLE_NAME, null, null);
+        return categoryDbHelper.countEntries();
     }
 
     public List<Category> getCategories() {
-        List<Category> categories = new ArrayList<Category>();
+        List<Category> categories = new ArrayList<>();
 
         for (int i = 0; i < getCategoriesSize(); i++) {
             categories.add(getCategory(i));
