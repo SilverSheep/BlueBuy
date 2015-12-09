@@ -9,21 +9,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pl.cba.marcinbaranowski.bluebuy.config.DBConfig;
-import pl.cba.marcinbaranowski.bluebuy.db.CategoryDbHelper;
+import pl.cba.marcinbaranowski.bluebuy.db.DbHelper;
 import pl.cba.marcinbaranowski.bluebuy.model.Category;
 
 public class CategoryProvider {
 
-    private CategoryDbHelper categoryDbHelper;
+    private DbHelper dbHelper;
 
     private static final String WHERE_ID_EQUALS = DBConfig.CATEGORY_COLUMN_ID + " =?";
 
     public CategoryProvider(Context context) {
-        categoryDbHelper = new CategoryDbHelper(context);
+        dbHelper = new DbHelper(context);
     }
 
     public Category getCategory(int position) {
-        SQLiteDatabase db = categoryDbHelper.getReadableDatabase();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         String[] projection = {
                 DBConfig.CATEGORY_COLUMN_ID, DBConfig.CATEGORY_COLUMN_NAME
@@ -50,7 +50,7 @@ public class CategoryProvider {
     }
 
     public int getCategoriesSize() {
-        return categoryDbHelper.countEntries();
+        return dbHelper.countCategories();
     }
 
     public List<Category> getCategories() {
@@ -64,7 +64,7 @@ public class CategoryProvider {
     }
 
     public void addCategory(Category category) {
-        SQLiteDatabase db = categoryDbHelper.getWritableDatabase();
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(DBConfig.CATEGORY_COLUMN_NAME, category.getName());
@@ -73,7 +73,7 @@ public class CategoryProvider {
     }
 
     public void removeCategory(Category category) {
-        SQLiteDatabase db = categoryDbHelper.getWritableDatabase();
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         db.delete(DBConfig.CATEGORY_TABLE_NAME, WHERE_ID_EQUALS, new String[]{category.getId() + ""});
     }

@@ -9,33 +9,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pl.cba.marcinbaranowski.bluebuy.config.DBConfig;
-import pl.cba.marcinbaranowski.bluebuy.db.EntryDbHelper;
+import pl.cba.marcinbaranowski.bluebuy.db.DbHelper;
 import pl.cba.marcinbaranowski.bluebuy.model.Category;
 import pl.cba.marcinbaranowski.bluebuy.model.Entry;
 
 /**
  * Created by flipflap on 07.12.15.
  */
-class EntryProvider {
+public class EntryProvider {
 
-    private EntryDbHelper entryDbHelper;
+    private DbHelper dbHelper;
 
     private static final String WHERE_ID_EQUALS = DBConfig.ENTRY_COLUMN_ID + " =?";
     private static final String CATEGORY_NAME_WITH_PREFIX = "cat.name";
 
     public EntryProvider(Context context) {
-        entryDbHelper = new EntryDbHelper(context);
+        dbHelper = new DbHelper(context);
     }
 
     public Entry getEntry(int position) {
-        SQLiteDatabase db = entryDbHelper.getReadableDatabase();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         // TODO: Sort entries
-        String query = "SELECT " + DBConfig.ENTRY_COLUMN_ID + ","
+        String query = "SELECT " + DBConfig.ENTRY_COLUMN_ID + ",ent."
                 + DBConfig.ENTRY_COLUMN_NAME + ","
                 + DBConfig.ENTRY_COLUMN_QUANTITY + ","
                 + DBConfig.ENTRY_COLUMN_UNIT + ","
-                + DBConfig.ENTRY_COLUMN_COMMENT + ","
+                + DBConfig.ENTRY_COLUMN_COMMENT + ",ent."
                 + DBConfig.ENTRY_COLUMN_CATEGORY_ID + ","
                 + CATEGORY_NAME_WITH_PREFIX + " FROM "
                 + DBConfig.ENTRY_TABLE_NAME + " ent, "
@@ -70,11 +70,11 @@ class EntryProvider {
     }
 
     public int getEntriesSize() {
-        return entryDbHelper.countEntries();
+        return dbHelper.countEntries();
     }
 
     public void addEntry(Entry entry) {
-        SQLiteDatabase db = entryDbHelper.getWritableDatabase();
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(DBConfig.ENTRY_COLUMN_NAME, entry.getName());
@@ -88,7 +88,7 @@ class EntryProvider {
     }
 
     public void removeEntry(Entry entry) {
-        SQLiteDatabase db = entryDbHelper.getWritableDatabase();
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         db.delete(DBConfig.ENTRY_TABLE_NAME, WHERE_ID_EQUALS, new String[]{entry.getId() + ""});
     }

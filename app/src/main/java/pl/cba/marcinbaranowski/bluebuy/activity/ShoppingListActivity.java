@@ -4,16 +4,17 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import pl.cba.marcinbaranowski.bluebuy.R;
 import pl.cba.marcinbaranowski.bluebuy.adapter.CategoryListAdapter;
+import pl.cba.marcinbaranowski.bluebuy.adapter.EntryListAdapter;
 import pl.cba.marcinbaranowski.bluebuy.adapter.ShoppingListAdapter;
 import pl.cba.marcinbaranowski.bluebuy.model.Category;
 import pl.cba.marcinbaranowski.bluebuy.model.Entry;
@@ -22,6 +23,7 @@ import pl.cba.marcinbaranowski.bluebuy.model.Entry;
 public class ShoppingListActivity extends AppCompatActivity {
 
     private final CategoryListAdapter categoryListAdapter = new CategoryListAdapter(this);
+    private final EntryListAdapter entryListAdapter = new EntryListAdapter(this);
 
     ShoppingListAdapter shoppingListAdapter;
     ExpandableListView expandableListView;
@@ -128,25 +130,36 @@ public class ShoppingListActivity extends AppCompatActivity {
         categoryListAdapter.notifyDataSetChanged();
     }
 
+    private void addEntry(Entry entry) {
+        entryListAdapter.addEntry(entry);
+        entryListAdapter.notifyDataSetChanged();
+    }
+
+    private void removeEntry(int entryPosition) {
+        entryListAdapter.addEntry(entryListAdapter.getItem(entryPosition));
+        entryListAdapter.notifyDataSetChanged();
+    }
+
+
+    // TODO: Move everything connected with dialogs to seperate classes
     private void showEditEntryDialog(final Entry entry) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         builder.setMessage("Zmień nazwę produktu").setTitle("Edycja produktu");
 
-        final EditText input = new EditText(this);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT);
-        input.setLayoutParams(lp);
-        builder.setView(input);
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.entry_dialog, null, false);
+        builder.setView(dialogView);
 
+        final EditText input = (EditText) dialogView.findViewById(R.id.entry_edit_text);
+
+        builder.setView(input);
 
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 //TODO: ADD Category name validation
 
-                entry.setName(input.getText().toString());
+                // shoppingListAdapter.add.setName(input.getText().toString());
                 showSuccessfullyEditedDialog();
             }
         });
@@ -168,25 +181,24 @@ public class ShoppingListActivity extends AppCompatActivity {
 
         builder.setMessage("Nowy produkt").setTitle("Dodawanie produktu");
 
-        final EditText entryNameInput = new EditText(this);
-        final Spinner categorySelect = new Spinner(this);
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.entry_dialog, null, false);
+        builder.setView(dialogView);
 
-        categorySelect.setAdapter(categoryListAdapter);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT);
-        entryNameInput.setLayoutParams(lp);
-        categorySelect.setLayoutParams(lp);
+        final EditText entryNameInput = (EditText) dialogView.findViewById(R.id.entry_edit_text);
+        final Spinner categories = (Spinner) dialogView.findViewById(R.id.categories_spinner);
 
-        builder.setView(categorySelect);
-        builder.setView(entryNameInput);
+        categories.setAdapter(categoryListAdapter);
 
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 //TODO: ADD Entry name validation
 
-                //addEntry(new Entry(entryNameInput.getText().toString()));
+                Entry entry = new Entry((Category) categories.getSelectedItem(), entryNameInput.getText().toString());
+
+                addEntry(entry);
+
+                showSuccessfullyEditedDialog();
                 showSuccessfullyAddedDialog();
             }
         });
@@ -208,19 +220,17 @@ public class ShoppingListActivity extends AppCompatActivity {
 
         builder.setMessage("Daj nazwę nowej kategorii").setTitle("Dodawanie kategorii");
 
-        final EditText input = new EditText(this);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT);
-        input.setLayoutParams(lp);
-        builder.setView(input);
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.category_dialog, null, false);
+        builder.setView(dialogView);
+
+        final EditText categoryNameInput = (EditText) dialogView.findViewById(R.id.category_edit_text);
 
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 //TODO: ADD Category name validation
 
-                addCategory(new Category(input.getText().toString()));
+                addCategory(new Category(categoryNameInput.getText().toString()));
                 showSuccessfullyAddedDialog();
             }
         });
