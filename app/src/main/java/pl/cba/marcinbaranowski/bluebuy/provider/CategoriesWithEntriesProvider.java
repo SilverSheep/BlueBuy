@@ -39,6 +39,29 @@ public class CategoriesWithEntriesProvider {
         CATEGORIES_WITH_ENTRIES.remove(category);
     }
 
+    public void refreshList() {
+        CATEGORIES_WITH_ENTRIES.clear();
+        prepareCategoriesWithEntries();
+    }
+
+    public void moveToBasket(int oldCategoryPosition, int entryPosition) {
+        for (int i=0; i<CATEGORIES_WITH_ENTRIES.size(); ++i) {
+            if (CATEGORIES_WITH_ENTRIES.get(i).getName().equals("koszyk")) {
+                moveEntryToOtherCategory(oldCategoryPosition, i, entryPosition);
+            }
+        }
+    }
+
+    private void moveEntryToOtherCategory(int oldCategoryPosition, int newCategoryPosition, int entryPosition) {
+        CategoryWithEntries oldCategory = getCategory(oldCategoryPosition);
+        Entry entry = oldCategory.getEntries().get(entryPosition);
+
+        oldCategory.getEntries().remove(entryPosition);
+
+        CategoryWithEntries newCategory = getCategory(newCategoryPosition);
+        newCategory.getEntries().add(entry);
+    }
+
     private void prepareCategoriesWithEntries() {
         CategoryProvider categoryProvider = new CategoryProvider(context);
         EntryProvider entryProvider = new EntryProvider(context);

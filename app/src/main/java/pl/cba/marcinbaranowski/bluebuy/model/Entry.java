@@ -1,9 +1,11 @@
 package pl.cba.marcinbaranowski.bluebuy.model;
 
+import java.io.Serializable;
+
 /**
  * Created by flipflap on 14.11.15.
  */
-public class Entry {
+public class Entry implements Serializable {
     private Long id;
     private Category category;
     private String name;

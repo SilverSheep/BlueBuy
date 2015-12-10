@@ -31,13 +31,17 @@ public class ShoppingListAdapter extends BaseExpandableListAdapter {
         return categoriesWithEntriesProvider.getCategory(categoryPosition).getEntries().get(entryPositionWithinCategory);
     }
 
+    public void refreshList() {
+        categoriesWithEntriesProvider.refreshList();
+    }
+
     @Override
     public long getChildId(int groupPosition, int childPosition) {
         return childPosition;
     }
 
     @Override
-    public View getChildView(int groupPosition, final int childPosition,
+    public View getChildView(final int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
         Entry entry = (Entry) getChild(groupPosition, childPosition);
         final String entryName = entry.getName();
@@ -52,6 +56,16 @@ public class ShoppingListAdapter extends BaseExpandableListAdapter {
                 .findViewById(R.id.entry_name);
 
         txtListChild.setText(entryName);
+
+        TextView plusIcon = (TextView) convertView.findViewById(R.id.plus);
+
+        plusIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                categoriesWithEntriesProvider.moveToBasket(groupPosition, childPosition);
+                notifyDataSetChanged();
+            }
+        });
         return convertView;
     }
 

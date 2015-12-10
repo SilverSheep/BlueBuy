@@ -45,17 +45,20 @@ public class EntryProvider {
 
         Cursor cursor = db.rawQuery(query, null);
 
-        cursor.moveToPosition(position);
+        if (cursor != null && cursor.moveToPosition(position)) {
+            String name = cursor.getString(1);
+            int quantity = cursor.getInt(2);
+            String unit = cursor.getString(3);
+            String comment = cursor.getString(4);
 
-        int id = cursor.getInt(0);
-        String name = cursor.getString(1);
-        int quantity = cursor.getInt(2);
-        String unit = cursor.getString(3);
-        String comment = cursor.getString(4);
+            Category category = new Category(cursor.getInt(5), cursor.getString(6));
 
-        Category category = new Category(cursor.getInt(5), cursor.getString(6));
+            cursor.close();
 
-        return new Entry(category, name, quantity, unit, comment);
+            return new Entry(category, name, quantity, unit, comment);
+        }
+
+        return null;
     }
 
     // TODO: Optimize

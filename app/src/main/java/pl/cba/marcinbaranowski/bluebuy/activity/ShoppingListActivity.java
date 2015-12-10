@@ -2,13 +2,13 @@ package pl.cba.marcinbaranowski.bluebuy.activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,11 +22,23 @@ import pl.cba.marcinbaranowski.bluebuy.model.Entry;
 //TODO: Prepare class - it's just copied from CategoryListActivity and renamed
 public class ShoppingListActivity extends AppCompatActivity {
 
+    public static final int NEW_ENTRY = 1;
+    public static final int EDIT_ENTRY = 2;
+    public static final String REQUEST_CODE = "requestCode";
+    public static final String CATEGORY_LIST_ADAPTER = "categoryListAdapter";
+    public static final String ENTRY_LIST_ADAPTER = "entryListAdapter";
+    public static final String SHOPPING_LIST_ADAPTER = "shoppingListAdapter";
+    public static final String ENTRY = "entry";
+
     private final CategoryListAdapter categoryListAdapter = new CategoryListAdapter(this);
     private final EntryListAdapter entryListAdapter = new EntryListAdapter(this);
 
-    ShoppingListAdapter shoppingListAdapter;
-    ExpandableListView expandableListView;
+    private ShoppingListAdapter shoppingListAdapter;
+    private ExpandableListView expandableListView;
+
+    public CategoryListAdapter getCategoryListAdapter() {
+        return categoryListAdapter;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +56,7 @@ public class ShoppingListActivity extends AppCompatActivity {
         addEntryLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showNewEntryDialog();
+                newEntry();
             }
         });
         addCategoryLink.setOnClickListener(new View.OnClickListener() {
@@ -123,97 +135,52 @@ public class ShoppingListActivity extends AppCompatActivity {
     private void addCategory(Category category) {
         categoryListAdapter.addCategory(category);
         categoryListAdapter.notifyDataSetChanged();
+        entryListAdapter.notifyDataSetChanged();
+        shoppingListAdapter.refreshList();
+        shoppingListAdapter.notifyDataSetChanged();
     }
 
     private void removeCategory(int categoryPosition) {
         categoryListAdapter.removeCategory(categoryListAdapter.getItem(categoryPosition));
-        categoryListAdapter.notifyDataSetChanged();
+        shoppingListAdapter.notifyDataSetChanged();
     }
 
     private void addEntry(Entry entry) {
         entryListAdapter.addEntry(entry);
+
+        categoryListAdapter.notifyDataSetChanged();
         entryListAdapter.notifyDataSetChanged();
+        shoppingListAdapter.refreshList();
+        shoppingListAdapter.notifyDataSetChanged();
     }
 
     private void removeEntry(int entryPosition) {
         entryListAdapter.addEntry(entryListAdapter.getItem(entryPosition));
-        entryListAdapter.notifyDataSetChanged();
+        shoppingListAdapter.notifyDataSetChanged();
     }
 
+    private void newEntry() {
+        Intent intent = new Intent(this, EntryActivity.class);
+        intent.putExtra(REQUEST_CODE, NEW_ENTRY);
+        startActivityForResult(intent, NEW_ENTRY);
+    }
+
+    private void editEntry() {
+        Intent intent = new Intent(this, EntryActivity.class);
+        intent.putExtra(REQUEST_CODE, EDIT_ENTRY);
+        startActivityForResult(intent, EDIT_ENTRY);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            Entry entry = (Entry) data.getExtras().getSerializable(ENTRY);
+            addEntry(entry);
+        }
+    }
 
     // TODO: Move everything connected with dialogs to seperate classes
-    private void showEditEntryDialog(final Entry entry) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        builder.setMessage("Zmień nazwę produktu").setTitle("Edycja produktu");
-
-        View dialogView = LayoutInflater.from(this).inflate(R.layout.entry_dialog, null, false);
-        builder.setView(dialogView);
-
-        final EditText input = (EditText) dialogView.findViewById(R.id.entry_edit_text);
-
-        builder.setView(input);
-
-        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                //TODO: ADD Category name validation
-
-                // shoppingListAdapter.add.setName(input.getText().toString());
-                showSuccessfullyEditedDialog();
-            }
-        });
-
-        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                // do nothing
-            }
-        });
-
-        AlertDialog dialog = builder.create();
-
-        dialog.show();
-    }
-
-    private void showNewEntryDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        builder.setMessage("Nowy produkt").setTitle("Dodawanie produktu");
-
-        View dialogView = LayoutInflater.from(this).inflate(R.layout.entry_dialog, null, false);
-        builder.setView(dialogView);
-
-        final EditText entryNameInput = (EditText) dialogView.findViewById(R.id.entry_edit_text);
-        final Spinner categories = (Spinner) dialogView.findViewById(R.id.categories_spinner);
-
-        categories.setAdapter(categoryListAdapter);
-
-        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                //TODO: ADD Entry name validation
-
-                Entry entry = new Entry((Category) categories.getSelectedItem(), entryNameInput.getText().toString());
-
-                addEntry(entry);
-
-                showSuccessfullyEditedDialog();
-                showSuccessfullyAddedDialog();
-            }
-        });
-
-        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                // do nothing
-            }
-        });
-
-        AlertDialog dialog = builder.create();
-
-        dialog.show();
-    }
 
     private void showNewCategoryDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
