@@ -197,7 +197,7 @@ public class ShoppingListActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 //TODO: ADD Category name validation
 
-                addCategory(new Category(categoryNameInput.getText().toString()));
+                addCategory(new Category(categoryNameInput.getText().toString(), false));
                 showSuccessfullyAddedDialog();
             }
         });

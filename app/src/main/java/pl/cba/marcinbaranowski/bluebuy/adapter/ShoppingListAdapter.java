@@ -5,10 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import pl.cba.marcinbaranowski.bluebuy.R;
 import pl.cba.marcinbaranowski.bluebuy.model.Category;
+import pl.cba.marcinbaranowski.bluebuy.model.CategoryWithEntries;
 import pl.cba.marcinbaranowski.bluebuy.model.Entry;
 import pl.cba.marcinbaranowski.bluebuy.provider.CategoriesWithEntriesProvider;
 
@@ -43,7 +46,7 @@ public class ShoppingListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(final int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
-        Entry entry = (Entry) getChild(groupPosition, childPosition);
+        final Entry entry = (Entry) getChild(groupPosition, childPosition);
         final String entryName = entry.getName();
 
         if (convertView == null) {
@@ -57,15 +60,40 @@ public class ShoppingListAdapter extends BaseExpandableListAdapter {
 
         txtListChild.setText(entryName);
 
-        TextView plusIcon = (TextView) convertView.findViewById(R.id.plus);
+        CategoryWithEntries category = categoriesWithEntriesProvider.getCategory(groupPosition);
+
+        final Boolean isBasket = category.isBasket();
+
+        final CheckBox plusIcon = (CheckBox) convertView.findViewById(R.id.plus);
+
+        // todo: why this doesn't work?
+        plusIcon.setSelected(isBasket);
 
         plusIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                categoriesWithEntriesProvider.moveToBasket(groupPosition, childPosition);
+
+                if (isBasket) {
+                    categoriesWithEntriesProvider.moveBackToOriginalCategory(groupPosition, entry);
+                } else {
+                    categoriesWithEntriesProvider.moveToBasket(groupPosition, entry);
+                }
                 notifyDataSetChanged();
             }
         });
+
+        plusIcon.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,
+                                         boolean isChecked) {
+                if (isChecked) {
+                    plusIcon.setChecked(false);
+                    // Code to display your message.
+                }
+            }
+        });
+
         return convertView;
     }
 

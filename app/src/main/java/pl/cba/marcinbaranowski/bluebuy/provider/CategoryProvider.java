@@ -26,7 +26,7 @@ public class CategoryProvider {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         String[] projection = {
-                DBConfig.CATEGORY_COLUMN_ID, DBConfig.CATEGORY_COLUMN_NAME
+                DBConfig.CATEGORY_COLUMN_ID, DBConfig.CATEGORY_COLUMN_NAME, DBConfig.CATEGORY_COLUMN_IS_BASKET
         };
 
         String sortOrder = DBConfig.CATEGORY_COLUMN_NAME + " DESC";
@@ -45,8 +45,9 @@ public class CategoryProvider {
 
         int id = cursor.getInt(0);
         String name = cursor.getString(1);
+        Boolean isBasket = cursor.getInt(2) == 1;
 
-        return new Category(id, name);
+        return new Category(id, name, isBasket);
     }
 
     public int getCategoriesSize() {
@@ -68,6 +69,7 @@ public class CategoryProvider {
 
         ContentValues values = new ContentValues();
         values.put(DBConfig.CATEGORY_COLUMN_NAME, category.getName());
+        values.put(DBConfig.CATEGORY_COLUMN_IS_BASKET, false);
 
         db.insert(DBConfig.CATEGORY_TABLE_NAME, null, values);
     }

@@ -7,14 +7,17 @@ public class Category implements Serializable {
 
     private int id;
     private String name;
+    private Boolean isBasket;
 
-    public Category(String name) {
+    public Category(String name, Boolean isBasket) {
         this.name = name;
+        this.isBasket = isBasket;
     }
 
-    public Category(int id, String name) {
+    public Category(int id, String name, Boolean isBasket) {
         this.id = id;
         this.name = name;
+        this.isBasket = isBasket;
     }
 
     public int getId() {
@@ -31,5 +34,13 @@ public class Category implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Boolean isBasket() {
+        return isBasket;
+    }
+
+    public void setIsBasket(Boolean isBasket) {
+        this.isBasket = isBasket;
     }
 }

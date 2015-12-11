@@ -37,7 +37,8 @@ public class EntryProvider {
                 + DBConfig.ENTRY_COLUMN_UNIT + ","
                 + DBConfig.ENTRY_COLUMN_COMMENT + ",ent."
                 + DBConfig.ENTRY_COLUMN_CATEGORY_ID + ","
-                + CATEGORY_NAME_WITH_PREFIX + " FROM "
+                + CATEGORY_NAME_WITH_PREFIX + ","
+                + DBConfig.CATEGORY_COLUMN_IS_BASKET + " FROM "
                 + DBConfig.ENTRY_TABLE_NAME + " ent, "
                 + DBConfig.CATEGORY_TABLE_NAME + " cat WHERE ent."
                 + DBConfig.ENTRY_COLUMN_CATEGORY_ID + " = cat."
@@ -51,7 +52,11 @@ public class EntryProvider {
             String unit = cursor.getString(3);
             String comment = cursor.getString(4);
 
-            Category category = new Category(cursor.getInt(5), cursor.getString(6));
+            int categoryId = cursor.getInt(5);
+            String categoryName = cursor.getString(6);
+            Boolean isBasket = cursor.getInt(7) == 1;
+
+            Category category = new Category(categoryId, categoryName, isBasket);
 
             cursor.close();
 

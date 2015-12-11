@@ -8,6 +8,7 @@ import java.io.Serializable;
 public class Entry implements Serializable {
     private Long id;
     private Category category;
+    private Category recentCategory;
     private String name;
 
     private int quantity;
@@ -41,6 +42,14 @@ public class Entry implements Serializable {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public Category getRecentCategory() {
+        return recentCategory;
+    }
+
+    public void setRecentCategory(Category recentCategory) {
+        this.recentCategory = recentCategory;
     }
 
     public String getName() {

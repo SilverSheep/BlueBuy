@@ -9,12 +9,13 @@ import pl.cba.marcinbaranowski.bluebuy.config.DBConfig;
  */
 class Query {
     private static final String INSERT_TO_CATEGORY_TABLE_PREFIX = "INSERT INTO " + DBConfig.CATEGORY_TABLE_NAME +
-            " (" + DBConfig.CATEGORY_COLUMN_NAME + ") VALUES ";
+            " (" + DBConfig.CATEGORY_COLUMN_NAME + ", " + DBConfig.CATEGORY_COLUMN_IS_BASKET + ") VALUES ";
 
     static final String CATEGORY_TABLE_CREATE =
             "CREATE TABLE " + DBConfig.CATEGORY_TABLE_NAME + " (" +
                     DBConfig.CATEGORY_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-                    DBConfig.CATEGORY_COLUMN_NAME + " TEXT NOT NULL);";
+                    DBConfig.CATEGORY_COLUMN_NAME + " TEXT NOT NULL, " +
+                    DBConfig.CATEGORY_COLUMN_IS_BASKET + " INTEGER NOT NULL);";
 
     static final String ENTRY_TABLE_CREATE =
             "CREATE TABLE " + DBConfig.ENTRY_TABLE_NAME + " (" +
@@ -41,10 +42,13 @@ class Query {
         sb.append(INSERT_TO_CATEGORY_TABLE_PREFIX);
         for (String categoryName :
                 categories) {
-            sb.append("('" + categoryName + "'),");
+
+            int isBasket = categoryName.equals("koszyk") ? 1 : 0;
+
+            sb.append("('" + categoryName + "', " + isBasket + "),");
         }
 
-        sb.deleteCharAt(sb.length()-1);
+        sb.deleteCharAt(sb.length() - 1);
         sb.append(";");
 
         return sb.toString();

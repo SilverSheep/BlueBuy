@@ -9,16 +9,16 @@ import java.util.List;
 public class CategoryWithEntries extends Category {
     private List<Entry> entries = new ArrayList<>();
 
-    public CategoryWithEntries(String name) {
-        super(name);
+    public CategoryWithEntries(String name, Boolean isBasket) {
+        super(name, isBasket);
     }
 
-    public CategoryWithEntries(int id, String name) {
-        super(id, name);
+    public CategoryWithEntries(int id, String name, Boolean isBasket) {
+        super(id, name, isBasket);
     }
 
-    public CategoryWithEntries(String name, List<Entry> entries) {
-        super(name);
+    public CategoryWithEntries(String name, Boolean isBasket, List<Entry> entries) {
+        super(name, isBasket);
         this.entries = entries;
     }
 

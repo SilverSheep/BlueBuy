@@ -114,7 +114,7 @@ public class CategoryListActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 //TODO: ADD Category name validation
 
-                addCategory(new Category(input.getText().toString()));
+                addCategory(new Category(input.getText().toString(), false));
                 showSuccessfullyAddedDialog();
             }
         });

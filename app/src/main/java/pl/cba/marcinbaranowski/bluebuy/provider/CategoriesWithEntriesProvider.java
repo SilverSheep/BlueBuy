@@ -44,19 +44,30 @@ public class CategoriesWithEntriesProvider {
         prepareCategoriesWithEntries();
     }
 
-    public void moveToBasket(int oldCategoryPosition, int entryPosition) {
-        for (int i=0; i<CATEGORIES_WITH_ENTRIES.size(); ++i) {
-            if (CATEGORIES_WITH_ENTRIES.get(i).getName().equals("koszyk")) {
-                moveEntryToOtherCategory(oldCategoryPosition, i, entryPosition);
+    public void moveToBasket(int oldCategoryPosition, Entry entry) {
+        for (int i = 0; i < CATEGORIES_WITH_ENTRIES.size(); ++i) {
+            if (CATEGORIES_WITH_ENTRIES.get(i).isBasket()) {
+                moveEntryToOtherCategory(oldCategoryPosition, i, entry);
             }
         }
     }
 
-    private void moveEntryToOtherCategory(int oldCategoryPosition, int newCategoryPosition, int entryPosition) {
-        CategoryWithEntries oldCategory = getCategory(oldCategoryPosition);
-        Entry entry = oldCategory.getEntries().get(entryPosition);
+    public void moveBackToOriginalCategory(int basketCategoryPosition, Entry entry) {
+        for (int i = 0; i < CATEGORIES_WITH_ENTRIES.size(); ++i) {
+            if (CATEGORIES_WITH_ENTRIES.get(i).getName().equals(entry.getRecentCategory().getName())) {
+                moveEntryToOtherCategory(basketCategoryPosition, i, entry);
+            }
+        }
+    }
 
-        oldCategory.getEntries().remove(entryPosition);
+    private void moveEntryToOtherCategory(int oldCategoryPosition, int newCategoryPosition, Entry entry) {
+        CategoryWithEntries oldCategory = getCategory(oldCategoryPosition);
+
+        if (!oldCategory.isBasket()) {
+            entry.setRecentCategory(entry.getCategory());
+        }
+
+        oldCategory.getEntries().remove(entry);
 
         CategoryWithEntries newCategory = getCategory(newCategoryPosition);
         newCategory.getEntries().add(entry);
@@ -66,7 +77,7 @@ public class CategoriesWithEntriesProvider {
         CategoryProvider categoryProvider = new CategoryProvider(context);
         EntryProvider entryProvider = new EntryProvider(context);
 
-        for (Category category:
+        for (Category category :
                 categoryProvider.getCategories()) {
 
             List<Entry> entries = new ArrayList<>();
@@ -80,7 +91,9 @@ public class CategoriesWithEntriesProvider {
                     entries.add(entry);
                 }
             }
-            addCategory(new CategoryWithEntries(category.getName(), entries));
+            if (!entries.isEmpty() || category.isBasket()) {
+                addCategory(new CategoryWithEntries(category.getName(), category.isBasket(), entries));
+            }
         }
     }
 
