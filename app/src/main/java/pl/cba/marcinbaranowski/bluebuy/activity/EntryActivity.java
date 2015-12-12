@@ -82,14 +82,14 @@ public class EntryActivity extends AppCompatActivity {
     private void loadEntry(Entry entryForEdition, int categoryPosition) {
         categorySpinner.setSelection(categoryPosition);
         entryNameEditText.setText(entryForEdition.getName());
-        quantityEditText.setText(String.valueOf(entryForEdition.getQuantity()));
+        quantityEditText.setText(String.valueOf(Math.round(entryForEdition.getQuantity())));
         unitEditText.setText(entryForEdition.getUnit());
     }
 
     private Entry prepareEntry() {
         Category category = (Category) categorySpinner.getSelectedItem();
         String entryName = entryNameEditText.getText().toString();
-        int quantity = Integer.valueOf(quantityEditText.getText().toString());
+        float quantity = Float.valueOf(quantityEditText.getText().toString());
 
         String unit = unitEditText.getText().toString();
 

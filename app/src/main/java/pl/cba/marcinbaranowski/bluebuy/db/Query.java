@@ -22,7 +22,7 @@ class Query {
                     DBConfig.ENTRY_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
                     DBConfig.ENTRY_COLUMN_NAME + " TEXT, " +
                     DBConfig.ENTRY_COLUMN_COMMENT + " TEXT, " +
-                    DBConfig.ENTRY_COLUMN_QUANTITY + " INTEGER, " +
+                    DBConfig.ENTRY_COLUMN_QUANTITY + " REAL, " +
                     DBConfig.ENTRY_COLUMN_CATEGORY_ID + " INTEGER, " +
                     DBConfig.ENTRY_COLUMN_RECENT_CATEGORY_ID + " INTEGER, " +
                     DBConfig.ENTRY_COLUMN_UNIT + " TEXT, " +

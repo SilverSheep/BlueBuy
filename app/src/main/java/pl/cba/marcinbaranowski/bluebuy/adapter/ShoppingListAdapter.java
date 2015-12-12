@@ -54,7 +54,7 @@ public class ShoppingListAdapter extends BaseExpandableListAdapter {
                              boolean isLastChild, View convertView, ViewGroup parent) {
         final Entry entry = (Entry) getChild(groupPosition, childPosition);
         final String entryName = entry.getName();
-        int quantity = entry.getQuantity();
+        float quantity = entry.getQuantity();
         String unit = entry.getUnit();
 
         if (convertView == null) {
@@ -66,11 +66,15 @@ public class ShoppingListAdapter extends BaseExpandableListAdapter {
         TextView entryTextView = (TextView) convertView
                 .findViewById(R.id.entry);
 
-        String entryText = entryName + " (" + quantity;
+        String entryText = entryName + " (";
+        if (quantity % 1 == 0) {        // if float has no decimals
+            entryText += Math.round(quantity);
+        } else {
+            entryText += quantity;
+        }
         if (unit == null || unit.isEmpty()) {
             entryText += ")";
-        }
-        else {
+        } else {
             entryText += " " + unit + ")";
         }
         entryTextView.setText(entryText);

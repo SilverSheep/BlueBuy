@@ -56,7 +56,7 @@ public class EntryProvider {
         if (cursor != null && cursor.moveToPosition(position)) {
             int id = cursor.getInt(0);
             String name = cursor.getString(1);
-            int quantity = cursor.getInt(2);
+            float quantity = cursor.getFloat(2);
             String unit = cursor.getString(3);
             String comment = cursor.getString(4);
 

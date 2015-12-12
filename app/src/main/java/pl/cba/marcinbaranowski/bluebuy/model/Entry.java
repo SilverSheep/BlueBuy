@@ -11,7 +11,7 @@ public class Entry implements Serializable {
     private Category recentCategory;
     private String name;
 
-    private int quantity;
+    private float quantity;
     private String unit;
     private String comment;
 
@@ -20,19 +20,19 @@ public class Entry implements Serializable {
         this.name = name;
     }
 
-    public Entry(Category category, String name, int quantity, String unit, String comment) {
+    public Entry(Category category, String name, float quantity, String unit, String comment) {
         this(category, name);
         this.quantity = quantity;
         this.unit = unit;
         this.comment = comment;
     }
 
-    public Entry(int id, Category category, String name, int quantity, String unit, String comment) {
+    public Entry(int id, Category category, String name, float quantity, String unit, String comment) {
         this(category, name, quantity, unit, comment);
         this.id = id;
     }
 
-    public Entry(int id, Category category, Category recentCategory, String name, int quantity, String unit, String comment) {
+    public Entry(int id, Category category, Category recentCategory, String name, float quantity, String unit, String comment) {
         this(id, category, name, quantity, unit, comment);
         this.recentCategory = recentCategory;
     }
@@ -69,11 +69,11 @@ public class Entry implements Serializable {
         this.name = name;
     }
 
-    public int getQuantity() {
+    public float getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(float quantity) {
         this.quantity = quantity;
     }
 
