@@ -10,24 +10,27 @@
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:id="@+id/add_to_basket" />
 
     <TextView
         android:id="@+id/entry"
         style="@style/PrimaryText"
-        android:paddingLeft="10dp"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="entry name"
-        android:layout_toRightOf="@+id/add_to_basket"/>
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/add_to_basket"
+        android:layout_toEndOf="@+id/add_to_basket" />
 
     <TextView
         android:id="@+id/remove"
         style="@style/RemoveText"
-        android:paddingLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="-"
+        android:layout_centerVertical="true"
         android:gravity="end"
         android:layout_toRightOf="@+id/entry"/>
 

@@ -1,6 +1,8 @@
 package pl.cba.marcinbaranowski.bluebuy.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,8 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import pl.cba.marcinbaranowski.bluebuy.R;
+import pl.cba.marcinbaranowski.bluebuy.activity.EntryActivity;
+import pl.cba.marcinbaranowski.bluebuy.activity.ShoppingListActivity;
 import pl.cba.marcinbaranowski.bluebuy.model.CategoryWithEntries;
 import pl.cba.marcinbaranowski.bluebuy.model.Entry;
 import pl.cba.marcinbaranowski.bluebuy.provider.CategoriesWithEntriesProvider;
@@ -56,12 +60,12 @@ public class ShoppingListAdapter extends BaseExpandableListAdapter {
             convertView = infalInflater.inflate(R.layout.entry_row, null);
         }
 
-        TextView txtListChild = (TextView) convertView
+        TextView entryTextView = (TextView) convertView
                 .findViewById(R.id.entry);
 
         String entryText = entryName + " (" + quantity + " " + unit + ")";
 
-        txtListChild.setText(entryText);
+        entryTextView.setText(entryText);
 
         CategoryWithEntries category = categoriesWithEntriesProvider.getCategory(groupPosition);
 
@@ -90,10 +94,18 @@ public class ShoppingListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onCheckedChanged(CompoundButton buttonView,
                                          boolean isChecked) {
-                if (isChecked) {
-                    addToBasketCheckBox.setChecked(false);
-                    // Code to display your message.
-                }
+                    addToBasketCheckBox.setChecked(!isChecked);
+            }
+        });
+
+        entryTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, EntryActivity.class);
+                intent.putExtra(ShoppingListActivity.ENTRY, entry);
+                intent.putExtra(ShoppingListActivity.REQUEST_CODE, ShoppingListActivity.EDIT_ENTRY);
+                intent.putExtra(ShoppingListActivity.CATEGORY_POSITION, groupPosition);
+                ((Activity) context).startActivityForResult(intent, ShoppingListActivity.EDIT_ENTRY);
             }
         });
 

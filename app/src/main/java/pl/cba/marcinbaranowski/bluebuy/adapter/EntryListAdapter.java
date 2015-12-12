@@ -41,8 +41,13 @@ public class EntryListAdapter extends BaseAdapter {
         entryProvider.addEntry(entry);
     }
 
+    public void updateEntry(Entry entry) {
+        entryProvider.updateEntry(entry);
+    }
+
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         return null;
     }
+
 }

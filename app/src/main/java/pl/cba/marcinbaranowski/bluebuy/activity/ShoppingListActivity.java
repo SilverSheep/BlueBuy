@@ -26,6 +26,7 @@ public class ShoppingListActivity extends AppCompatActivity {
     public static final int EDIT_ENTRY = 2;
     public static final String REQUEST_CODE = "requestCode";
     public static final String ENTRY = "entry";
+    public static final String CATEGORY_POSITION = "categoryPosition";
 
     private final CategoryListAdapter categoryListAdapter = new CategoryListAdapter(this);
     private final EntryListAdapter entryListAdapter = new EntryListAdapter(this);
@@ -162,10 +163,13 @@ public class ShoppingListActivity extends AppCompatActivity {
         startActivityForResult(intent, NEW_ENTRY);
     }
 
-    private void editEntry() {
-        Intent intent = new Intent(this, EntryActivity.class);
-        intent.putExtra(REQUEST_CODE, EDIT_ENTRY);
-        startActivityForResult(intent, EDIT_ENTRY);
+    private void updateEntry(Entry entry) {
+        entryListAdapter.updateEntry(entry);
+
+        categoryListAdapter.notifyDataSetChanged();
+        entryListAdapter.notifyDataSetChanged();
+        shoppingListAdapter.refreshList();
+        shoppingListAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -173,7 +177,12 @@ public class ShoppingListActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             Entry entry = (Entry) data.getExtras().getSerializable(ENTRY);
-            addEntry(entry);
+            if (requestCode == NEW_ENTRY) {
+                addEntry(entry);
+            }
+            else if (requestCode == EDIT_ENTRY) {
+                updateEntry(entry);
+            }
         }
     }
 

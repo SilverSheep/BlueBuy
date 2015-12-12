@@ -65,7 +65,7 @@ public class EntryProvider {
             String categoryName = cursor.getString(7);
             Boolean isBasket = cursor.getInt(8) == 1;
 
-          String recentCategoryName = cursor.getString(9);
+            String recentCategoryName = cursor.getString(9);
 
             cursor.close();
 
@@ -73,8 +73,7 @@ public class EntryProvider {
 
             if (categoryId == recentCategoryId) {
                 return new Entry(id, category, name, quantity, unit, comment);
-            }
-            else {
+            } else {
                 Category recentCategory = new Category(recentCategoryId, recentCategoryName, false);
 
                 return new Entry(id, category, recentCategory, name, quantity, unit, comment);
@@ -128,8 +127,11 @@ public class EntryProvider {
         values.put(DBConfig.ENTRY_COLUMN_UNIT, entry.getUnit());
         values.put(DBConfig.ENTRY_COLUMN_COMMENT, entry.getComment());
         values.put(DBConfig.ENTRY_COLUMN_CATEGORY_ID, entry.getCategory().getId());
-        values.put(DBConfig.ENTRY_COLUMN_RECENT_CATEGORY_ID, entry.getRecentCategory().getId());
-
+        if (entry.getRecentCategory() != null) {
+            values.put(DBConfig.ENTRY_COLUMN_RECENT_CATEGORY_ID, entry.getRecentCategory().getId());
+        } else {
+            values.put(DBConfig.ENTRY_COLUMN_RECENT_CATEGORY_ID, entry.getCategory().getId());
+        }
         db.update(DBConfig.ENTRY_TABLE_NAME, values, DBConfig.ENTRY_COLUMN_ID + "=" + entry.getId(), null);
     }
 }
