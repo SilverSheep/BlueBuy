@@ -97,6 +97,7 @@ public class ShoppingListAdapter extends BaseExpandableListAdapter {
                 } else {
                     categoriesWithEntriesProvider.moveToBasket(groupPosition, entry);
                 }
+                refreshList();
                 notifyDataSetChanged();
             }
         });
@@ -194,6 +195,7 @@ public class ShoppingListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 categoriesWithEntriesProvider.removeEntry(groupPosition, entry);
+                refreshList();
                 notifyDataSetChanged();
             }
         });

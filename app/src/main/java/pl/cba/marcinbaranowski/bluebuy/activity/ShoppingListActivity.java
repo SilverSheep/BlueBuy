@@ -146,6 +146,7 @@ public class ShoppingListActivity extends AppCompatActivity {
     private void addEntry(Entry entry) {
         entryListAdapter.addEntry(entry);
 
+        //todo: find out what is really needed
         categoryListAdapter.notifyDataSetChanged();
         entryListAdapter.notifyDataSetChanged();
         shoppingListAdapter.refreshList();
