@@ -60,13 +60,34 @@ public class CategoriesWithEntriesProvider {
     }
 
     public void moveBackToOriginalCategory(int basketCategoryPosition, Entry entry) {
+        boolean isOriginalCategoryEmpty = true;
         for (int i = 0; i < CATEGORIES_WITH_ENTRIES.size(); ++i) {
             String categoryName = CATEGORIES_WITH_ENTRIES.get(i).getCategory().getName();
             String entryCategoryName = entry.getRecentCategory().getName();
             if (categoryName.equals(entryCategoryName)) {
                 moveEntryToOtherCategory(basketCategoryPosition, i, entry);
+                isOriginalCategoryEmpty = false;
             }
         }
+        if (isOriginalCategoryEmpty) {
+            moveEntryToEmptyCategory(basketCategoryPosition, entry.getRecentCategory(), entry);
+        }
+    }
+
+    private void moveEntryToEmptyCategory(int oldCategoryPosition, Category emptyCategory, Entry entry) {
+        CategoryWithEntries oldCategory = getCategory(oldCategoryPosition);
+
+        if (!oldCategory.getCategory().isBasket()) {
+            entry.setRecentCategory(entry.getCategory());
+        }
+
+        oldCategory.getEntries().remove(entry);
+
+        EntryProvider entryProvider = new EntryProvider(context);
+
+        entry.setCategory(emptyCategory);
+        prepareCategoriesWithEntries();
+        entryProvider.updateEntry(entry);
     }
 
     private void moveEntryToOtherCategory(int oldCategoryPosition, int newCategoryPosition, Entry entry) {
