@@ -1,7 +1,9 @@
 package pl.cba.marcinbaranowski.bluebuy.adapter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -114,8 +116,7 @@ public class ShoppingListAdapter extends BaseExpandableListAdapter {
         removeEntryTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                categoriesWithEntriesProvider.removeEntry(groupPosition, entry);
-                notifyDataSetChanged();
+                showConfirmEntryDeletionDialog(groupPosition, entry);
             }
         });
 
@@ -170,5 +171,30 @@ public class ShoppingListAdapter extends BaseExpandableListAdapter {
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
+    }
+
+    private void showConfirmEntryDeletionDialog(final int groupPosition, final Entry entry) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        builder.setMessage("Usunąć produkt z listy?").setTitle("Jesteś pewna?");
+
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                categoriesWithEntriesProvider.removeEntry(groupPosition, entry);
+                notifyDataSetChanged();
+            }
+        });
+
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // do nothing
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+
+        dialog.show();
     }
 }

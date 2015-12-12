@@ -114,7 +114,6 @@ public class EntryProvider {
 
     public void removeEntry(Entry entry) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-
         db.delete(DBConfig.ENTRY_TABLE_NAME, WHERE_ID_EQUALS, new String[]{entry.getId() + ""});
     }
 
