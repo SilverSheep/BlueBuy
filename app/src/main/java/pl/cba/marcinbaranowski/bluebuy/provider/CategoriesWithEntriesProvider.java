@@ -85,27 +85,27 @@ public class CategoriesWithEntriesProvider {
         entryProvider.updateEntry(entry);
     }
 
-    // todo: optimize - swap loops
     private void prepareCategoriesWithEntries() {
         CategoryProvider categoryProvider = new CategoryProvider(context);
         EntryProvider entryProvider = new EntryProvider(context);
+        List<Entry> entries = entryProvider.getEntries();
 
         for (Category category :
                 categoryProvider.getCategories()) {
 
-            List<Entry> entries = new ArrayList<>();
+            List<Entry> categoryEntries = new ArrayList<>();
 
             for (Entry entry :
-                    entryProvider.getEntries()) {
-
+                    entries) {
                 Category entryCategory = entry.getCategory();
 
                 if (category.getName().equals(entryCategory.getName())) {
-                    entries.add(entry);
+                    categoryEntries.add(entry);
                 }
             }
-            if (!entries.isEmpty() || category.isBasket()) {
-                addCategory(new CategoryWithEntries(category, entries));
+            if (!categoryEntries.isEmpty() || category.isBasket()) {
+                addCategory(new CategoryWithEntries(category, categoryEntries));
+                entries.removeAll(categoryEntries);
             }
         }
     }
