@@ -6,21 +6,19 @@ import java.util.List;
 /**
  * Created by flipflap on 07.12.15.
  */
-public class CategoryWithEntries extends Category {
+public class CategoryWithEntries {
     private List<Entry> entries = new ArrayList<>();
+    private Category category;
 
-    public CategoryWithEntries(String name, Boolean isBasket) {
-        super(name, isBasket);
+    public CategoryWithEntries(Category category) {
+        this.category = category;
     }
 
-    public CategoryWithEntries(int id, String name, Boolean isBasket) {
-        super(id, name, isBasket);
-    }
-
-    public CategoryWithEntries(String name, Boolean isBasket, List<Entry> entries) {
-        super(name, isBasket);
+    public CategoryWithEntries(Category category, List<Entry> entries) {
+        this.category = category;
         this.entries = entries;
     }
+
 
     public List<Entry> getEntries() {
         return entries;
@@ -28,5 +26,13 @@ public class CategoryWithEntries extends Category {
 
     public void setEntries(List<Entry> entries) {
         this.entries = entries;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

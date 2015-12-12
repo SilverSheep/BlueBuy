@@ -1,32 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/new_category_dialog"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <EditText
+        android:id="@+id/entry_edit_text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/entry_edit_text" />
+        android:layout_height="wrap_content" />
 
     <Spinner
+        android:id="@+id/categories_spinner"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:id="@+id/categories_spinner"
         android:layout_gravity="center_horizontal" />
 
-    <Button
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/quantity"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
-        android:text="Ok"
-        android:id="@+id/ok_button" />
+        />
+
+    <EditText
+        android:id="@+id/unit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <Button
+        android:id="@+id/ok_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Anuluj"
+        android:text="Ok" />
+
+    <Button
         android:id="@+id/cancel_button"
-        android:layout_gravity="center_horizontal" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Anuluj" />
 
 </LinearLayout>

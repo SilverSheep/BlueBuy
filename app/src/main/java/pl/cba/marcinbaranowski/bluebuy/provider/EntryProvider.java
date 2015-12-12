@@ -47,6 +47,7 @@ public class EntryProvider {
         Cursor cursor = db.rawQuery(query, null);
 
         if (cursor != null && cursor.moveToPosition(position)) {
+            int id = cursor.getInt(0);
             String name = cursor.getString(1);
             int quantity = cursor.getInt(2);
             String unit = cursor.getString(3);
@@ -60,7 +61,7 @@ public class EntryProvider {
 
             cursor.close();
 
-            return new Entry(category, name, quantity, unit, comment);
+            return new Entry(id, category, name, quantity, unit, comment);
         }
 
         return null;
@@ -99,5 +100,19 @@ public class EntryProvider {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         db.delete(DBConfig.ENTRY_TABLE_NAME, WHERE_ID_EQUALS, new String[]{entry.getId() + ""});
+    }
+
+    public void updateEntry(Entry entry) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(DBConfig.ENTRY_COLUMN_NAME, entry.getName());
+        values.put(DBConfig.ENTRY_COLUMN_QUANTITY, entry.getQuantity());
+        values.put(DBConfig.ENTRY_COLUMN_UNIT, entry.getUnit());
+        values.put(DBConfig.ENTRY_COLUMN_COMMENT, entry.getComment());
+        values.put(DBConfig.ENTRY_COLUMN_CATEGORY_ID, entry.getCategory().getId());
+        values.put(DBConfig.ENTRY_COLUMN_RECENT_CATEGORY_ID, entry.getCategory().getId());
+
+        db.update(DBConfig.ENTRY_TABLE_NAME, values, DBConfig.ENTRY_COLUMN_ID + "=" + entry.getId(), null);
     }
 }

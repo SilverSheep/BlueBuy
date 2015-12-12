@@ -39,6 +39,13 @@ public class CategoriesWithEntriesProvider {
         CATEGORIES_WITH_ENTRIES.remove(category);
     }
 
+    public void removeEntry(int categoryPosition, Entry entry) {
+        EntryProvider entryProvider = new EntryProvider(context);
+        CATEGORIES_WITH_ENTRIES.get(categoryPosition).getEntries().remove(entry);
+
+        entryProvider.removeEntry(entry);
+    }
+
     public void refreshList() {
         CATEGORIES_WITH_ENTRIES.clear();
         prepareCategoriesWithEntries();
@@ -46,7 +53,7 @@ public class CategoriesWithEntriesProvider {
 
     public void moveToBasket(int oldCategoryPosition, Entry entry) {
         for (int i = 0; i < CATEGORIES_WITH_ENTRIES.size(); ++i) {
-            if (CATEGORIES_WITH_ENTRIES.get(i).isBasket()) {
+            if (CATEGORIES_WITH_ENTRIES.get(i).getCategory().isBasket()) {
                 moveEntryToOtherCategory(oldCategoryPosition, i, entry);
             }
         }
@@ -54,7 +61,7 @@ public class CategoriesWithEntriesProvider {
 
     public void moveBackToOriginalCategory(int basketCategoryPosition, Entry entry) {
         for (int i = 0; i < CATEGORIES_WITH_ENTRIES.size(); ++i) {
-            if (CATEGORIES_WITH_ENTRIES.get(i).getName().equals(entry.getRecentCategory().getName())) {
+            if (CATEGORIES_WITH_ENTRIES.get(i).getCategory().getName().equals(entry.getRecentCategory().getName())) {
                 moveEntryToOtherCategory(basketCategoryPosition, i, entry);
             }
         }
@@ -63,16 +70,20 @@ public class CategoriesWithEntriesProvider {
     private void moveEntryToOtherCategory(int oldCategoryPosition, int newCategoryPosition, Entry entry) {
         CategoryWithEntries oldCategory = getCategory(oldCategoryPosition);
 
-        if (!oldCategory.isBasket()) {
+        if (!oldCategory.getCategory().isBasket()) {
             entry.setRecentCategory(entry.getCategory());
         }
 
         oldCategory.getEntries().remove(entry);
+        EntryProvider entryProvider = new EntryProvider(context);
 
         CategoryWithEntries newCategory = getCategory(newCategoryPosition);
+        entry.setCategory(newCategory.getCategory());
         newCategory.getEntries().add(entry);
+        entryProvider.updateEntry(entry);
     }
 
+    // todo: optimize - swap loops
     private void prepareCategoriesWithEntries() {
         CategoryProvider categoryProvider = new CategoryProvider(context);
         EntryProvider entryProvider = new EntryProvider(context);
@@ -89,10 +100,11 @@ public class CategoriesWithEntriesProvider {
 
                 if (category.getName().equals(entryCategory.getName())) {
                     entries.add(entry);
+                    break;
                 }
             }
             if (!entries.isEmpty() || category.isBasket()) {
-                addCategory(new CategoryWithEntries(category.getName(), category.isBasket(), entries));
+                addCategory(new CategoryWithEntries(category, entries));
             }
         }
     }

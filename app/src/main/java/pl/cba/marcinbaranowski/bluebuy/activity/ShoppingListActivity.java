@@ -25,9 +25,6 @@ public class ShoppingListActivity extends AppCompatActivity {
     public static final int NEW_ENTRY = 1;
     public static final int EDIT_ENTRY = 2;
     public static final String REQUEST_CODE = "requestCode";
-    public static final String CATEGORY_LIST_ADAPTER = "categoryListAdapter";
-    public static final String ENTRY_LIST_ADAPTER = "entryListAdapter";
-    public static final String SHOPPING_LIST_ADAPTER = "shoppingListAdapter";
     public static final String ENTRY = "entry";
 
     private final CategoryListAdapter categoryListAdapter = new CategoryListAdapter(this);

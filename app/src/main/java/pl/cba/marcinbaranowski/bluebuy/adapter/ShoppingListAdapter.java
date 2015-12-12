@@ -10,7 +10,6 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import pl.cba.marcinbaranowski.bluebuy.R;
-import pl.cba.marcinbaranowski.bluebuy.model.Category;
 import pl.cba.marcinbaranowski.bluebuy.model.CategoryWithEntries;
 import pl.cba.marcinbaranowski.bluebuy.model.Entry;
 import pl.cba.marcinbaranowski.bluebuy.provider.CategoriesWithEntriesProvider;
@@ -48,6 +47,8 @@ public class ShoppingListAdapter extends BaseExpandableListAdapter {
                              boolean isLastChild, View convertView, ViewGroup parent) {
         final Entry entry = (Entry) getChild(groupPosition, childPosition);
         final String entryName = entry.getName();
+        int quantity = entry.getQuantity();
+        String unit = entry.getUnit();
 
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this.context
@@ -56,20 +57,22 @@ public class ShoppingListAdapter extends BaseExpandableListAdapter {
         }
 
         TextView txtListChild = (TextView) convertView
-                .findViewById(R.id.entry_name);
+                .findViewById(R.id.entry);
 
-        txtListChild.setText(entryName);
+        String entryText = entryName + " (" + quantity + " " + unit + ")";
+
+        txtListChild.setText(entryText);
 
         CategoryWithEntries category = categoriesWithEntriesProvider.getCategory(groupPosition);
 
-        final Boolean isBasket = category.isBasket();
+        final Boolean isBasket = category.getCategory().isBasket();
 
-        final CheckBox plusIcon = (CheckBox) convertView.findViewById(R.id.plus);
+        final CheckBox addToBasketCheckBox = (CheckBox) convertView.findViewById(R.id.add_to_basket);
 
         // todo: why this doesn't work?
-        plusIcon.setSelected(isBasket);
+        addToBasketCheckBox.setSelected(isBasket);
 
-        plusIcon.setOnClickListener(new View.OnClickListener() {
+        addToBasketCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -82,15 +85,25 @@ public class ShoppingListAdapter extends BaseExpandableListAdapter {
             }
         });
 
-        plusIcon.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        addToBasketCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
             @Override
             public void onCheckedChanged(CompoundButton buttonView,
                                          boolean isChecked) {
                 if (isChecked) {
-                    plusIcon.setChecked(false);
+                    addToBasketCheckBox.setChecked(false);
                     // Code to display your message.
                 }
+            }
+        });
+
+        final TextView removeEntryTextView = (TextView) convertView.findViewById(R.id.remove);
+
+        removeEntryTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                categoriesWithEntriesProvider.removeEntry(groupPosition, entry);
+                notifyDataSetChanged();
             }
         });
 
@@ -120,8 +133,8 @@ public class ShoppingListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
-        Category category = (Category) getGroup(groupPosition);
-        String categoryName = category.getName();
+        CategoryWithEntries category = (CategoryWithEntries) getGroup(groupPosition);
+        String categoryName = category.getCategory().getName();
 
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this.context

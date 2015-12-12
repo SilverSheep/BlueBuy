@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by flipflap on 14.11.15.
  */
 public class Entry implements Serializable {
-    private Long id;
+    private int id;
     private Category category;
     private Category recentCategory;
     private String name;
@@ -28,11 +28,20 @@ public class Entry implements Serializable {
         this.comment = comment;
     }
 
-    public Long getId() {
+    public Entry(int id, Category category, String name, int quantity, String unit, String comment) {
+        this.id = id;
+        this.category = category;
+        this.name = name;
+        this.quantity = quantity;
+        this.unit = unit;
+        this.comment = comment;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

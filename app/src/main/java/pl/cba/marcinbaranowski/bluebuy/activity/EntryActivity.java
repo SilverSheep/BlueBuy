@@ -40,8 +40,7 @@ public class EntryActivity extends AppCompatActivity {
 
         if (requestCode == ShoppingListActivity.NEW_ENTRY) {
             okButton.setText("Dodaj");
-        }
-        else if (requestCode == ShoppingListActivity.EDIT_ENTRY) {
+        } else if (requestCode == ShoppingListActivity.EDIT_ENTRY) {
             okButton.setText("Uaktualnij");
         }
 
@@ -51,8 +50,7 @@ public class EntryActivity extends AppCompatActivity {
                 Entry entry = null;
                 if (requestCode == ShoppingListActivity.NEW_ENTRY) {
                     entry = addEntry();
-                }
-                else if (requestCode == ShoppingListActivity.EDIT_ENTRY) {
+                } else if (requestCode == ShoppingListActivity.EDIT_ENTRY) {
                     editEntry();
                 }
                 setResult(RESULT_OK, i.putExtra(ShoppingListActivity.ENTRY, entry));
@@ -71,15 +69,23 @@ public class EntryActivity extends AppCompatActivity {
     }
 
     private Entry addEntry() {
-        Category category  = (Category) categorySpinner.getSelectedItem();
+        Category category = (Category) categorySpinner.getSelectedItem();
         EditText entryNameEditText = (EditText) findViewById(R.id.entry_edit_text);
         String entryName = entryNameEditText.getText().toString();
-        Entry entry = new Entry(category, entryName);
+
+        EditText quantityEditText = (EditText) findViewById(R.id.quantity);
+        int quantity = Integer.valueOf(quantityEditText.getText().toString());
+
+        EditText unitEditText = (EditText) findViewById(R.id.unit);
+
+        String unit = unitEditText.getText().toString();
+
+        Entry entry = new Entry(category, entryName, quantity, unit, "");
         return entry;
     }
 
     private void editEntry() {
-      //  entryListAdapter
+        //  entryListAdapter
     }
 
 }
