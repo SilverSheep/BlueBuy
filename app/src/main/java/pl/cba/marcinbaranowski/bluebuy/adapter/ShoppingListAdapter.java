@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import pl.cba.marcinbaranowski.bluebuy.R;
@@ -65,8 +66,13 @@ public class ShoppingListAdapter extends BaseExpandableListAdapter {
         TextView entryTextView = (TextView) convertView
                 .findViewById(R.id.entry);
 
-        String entryText = entryName + " (" + quantity + " " + unit + ")";
-
+        String entryText = entryName + " (" + quantity;
+        if (unit == null || unit.isEmpty()) {
+            entryText += ")";
+        }
+        else {
+            entryText += " " + unit + ")";
+        }
         entryTextView.setText(entryText);
 
         CategoryWithEntries category = categoriesWithEntriesProvider.getCategory(groupPosition);
@@ -96,11 +102,14 @@ public class ShoppingListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onCheckedChanged(CompoundButton buttonView,
                                          boolean isChecked) {
-                    addToBasketCheckBox.setChecked(!isChecked);
+                addToBasketCheckBox.setChecked(!isChecked);
             }
         });
 
-        entryTextView.setOnClickListener(new View.OnClickListener() {
+        final ImageView editEntryImageView = (ImageView) convertView.findViewById(R.id.edit_icon);
+        final ImageView removeEntryImageView = (ImageView) convertView.findViewById(R.id.remove_icon);
+
+        editEntryImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, EntryActivity.class);
@@ -111,9 +120,7 @@ public class ShoppingListAdapter extends BaseExpandableListAdapter {
             }
         });
 
-        final TextView removeEntryTextView = (TextView) convertView.findViewById(R.id.remove);
-
-        removeEntryTextView.setOnClickListener(new View.OnClickListener() {
+        removeEntryImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showConfirmEntryDeletionDialog(groupPosition, entry);

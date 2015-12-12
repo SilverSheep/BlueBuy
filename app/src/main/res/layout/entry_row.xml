@@ -23,16 +23,25 @@
         android:layout_toRightOf="@+id/add_to_basket"
         android:layout_toEndOf="@+id/add_to_basket" />
 
-    <TextView
-        android:id="@+id/remove"
+    <ImageView
+        android:id="@+id/edit_icon"
+        style="@style/RemoveText"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/edit_icon"
+        android:layout_toRightOf="@+id/entry"/>
+
+    <ImageView
+        android:id="@+id/remove_icon"
         style="@style/RemoveText"
         android:layout_marginRight="10dp"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="-"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_centerVertical="true"
         android:gravity="end"
-        android:layout_toRightOf="@+id/entry"/>
+        android:layout_toRightOf="@+id/edit_icon"
+        android:src="@drawable/delete_icon" />
 
     <!--<TextView-->
         <!--android:id="@+id/comment"-->
