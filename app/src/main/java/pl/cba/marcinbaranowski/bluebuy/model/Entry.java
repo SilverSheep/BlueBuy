@@ -21,20 +21,20 @@ public class Entry implements Serializable {
     }
 
     public Entry(Category category, String name, int quantity, String unit, String comment) {
-        this.category = category;
-        this.name = name;
+        this(category, name);
         this.quantity = quantity;
         this.unit = unit;
         this.comment = comment;
     }
 
     public Entry(int id, Category category, String name, int quantity, String unit, String comment) {
+        this(category, name, quantity, unit, comment);
         this.id = id;
-        this.category = category;
-        this.name = name;
-        this.quantity = quantity;
-        this.unit = unit;
-        this.comment = comment;
+    }
+
+    public Entry(int id, Category category, Category recentCategory, String name, int quantity, String unit, String comment) {
+        this(id, category, name, quantity, unit, comment);
+        this.recentCategory = recentCategory;
     }
 
     public int getId() {

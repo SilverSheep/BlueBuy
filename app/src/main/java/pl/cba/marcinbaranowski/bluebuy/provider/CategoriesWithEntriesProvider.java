@@ -61,7 +61,9 @@ public class CategoriesWithEntriesProvider {
 
     public void moveBackToOriginalCategory(int basketCategoryPosition, Entry entry) {
         for (int i = 0; i < CATEGORIES_WITH_ENTRIES.size(); ++i) {
-            if (CATEGORIES_WITH_ENTRIES.get(i).getCategory().getName().equals(entry.getRecentCategory().getName())) {
+            String categoryName = CATEGORIES_WITH_ENTRIES.get(i).getCategory().getName();
+            String entryCategoryName = entry.getRecentCategory().getName();
+            if (categoryName.equals(entryCategoryName)) {
                 moveEntryToOtherCategory(basketCategoryPosition, i, entry);
             }
         }
@@ -100,7 +102,6 @@ public class CategoriesWithEntriesProvider {
 
                 if (category.getName().equals(entryCategory.getName())) {
                     entries.add(entry);
-                    break;
                 }
             }
             if (!entries.isEmpty() || category.isBasket()) {

@@ -22,6 +22,8 @@ public class EntryProvider {
 
     private static final String WHERE_ID_EQUALS = DBConfig.ENTRY_COLUMN_ID + " =?";
     private static final String CATEGORY_NAME_WITH_PREFIX = "cat.name";
+    private static final String RECENT_CATEGORY_NAME_PREFIX = "rcat.name";
+    private static final String CATEGORY_IS_BASKET_WITH_PREFIX = "cat.is_basket";
 
     public EntryProvider(Context context) {
         dbHelper = new DbHelper(context);
@@ -37,11 +39,16 @@ public class EntryProvider {
                 + DBConfig.ENTRY_COLUMN_UNIT + ","
                 + DBConfig.ENTRY_COLUMN_COMMENT + ",ent."
                 + DBConfig.ENTRY_COLUMN_CATEGORY_ID + ","
+                + DBConfig.ENTRY_COLUMN_RECENT_CATEGORY_ID + ","
                 + CATEGORY_NAME_WITH_PREFIX + ","
-                + DBConfig.CATEGORY_COLUMN_IS_BASKET + " FROM "
+                + CATEGORY_IS_BASKET_WITH_PREFIX + ","
+                + RECENT_CATEGORY_NAME_PREFIX + " FROM "
                 + DBConfig.ENTRY_TABLE_NAME + " ent, "
-                + DBConfig.CATEGORY_TABLE_NAME + " cat WHERE ent."
+                + DBConfig.CATEGORY_TABLE_NAME + " cat, "
+                + DBConfig.CATEGORY_TABLE_NAME + " rcat WHERE ent."
                 + DBConfig.ENTRY_COLUMN_CATEGORY_ID + " = cat."
+                + DBConfig.CATEGORY_COLUMN_ID + " AND "
+                + DBConfig.ENTRY_COLUMN_RECENT_CATEGORY_ID + " = rcat."
                 + DBConfig.CATEGORY_COLUMN_ID;
 
         Cursor cursor = db.rawQuery(query, null);
@@ -54,14 +61,24 @@ public class EntryProvider {
             String comment = cursor.getString(4);
 
             int categoryId = cursor.getInt(5);
-            String categoryName = cursor.getString(6);
-            Boolean isBasket = cursor.getInt(7) == 1;
+            int recentCategoryId = cursor.getInt(6);
+            String categoryName = cursor.getString(7);
+            Boolean isBasket = cursor.getInt(8) == 1;
 
-            Category category = new Category(categoryId, categoryName, isBasket);
+          String recentCategoryName = cursor.getString(9);
 
             cursor.close();
 
-            return new Entry(id, category, name, quantity, unit, comment);
+            Category category = new Category(categoryId, categoryName, isBasket);
+
+            if (categoryId == recentCategoryId) {
+                return new Entry(id, category, name, quantity, unit, comment);
+            }
+            else {
+                Category recentCategory = new Category(recentCategoryId, recentCategoryName, false);
+
+                return new Entry(id, category, recentCategory, name, quantity, unit, comment);
+            }
         }
 
         return null;
@@ -111,7 +128,7 @@ public class EntryProvider {
         values.put(DBConfig.ENTRY_COLUMN_UNIT, entry.getUnit());
         values.put(DBConfig.ENTRY_COLUMN_COMMENT, entry.getComment());
         values.put(DBConfig.ENTRY_COLUMN_CATEGORY_ID, entry.getCategory().getId());
-        values.put(DBConfig.ENTRY_COLUMN_RECENT_CATEGORY_ID, entry.getCategory().getId());
+        values.put(DBConfig.ENTRY_COLUMN_RECENT_CATEGORY_ID, entry.getRecentCategory().getId());
 
         db.update(DBConfig.ENTRY_TABLE_NAME, values, DBConfig.ENTRY_COLUMN_ID + "=" + entry.getId(), null);
     }
