@@ -168,8 +168,9 @@ public class ShoppingListAdapter extends BaseExpandableListAdapter {
 
         TextView categoryNameTextView = (TextView) convertView
                 .findViewById(R.id.category_name);
-        // categoryNameTextView.setTypeface(null, Typeface.BOLD);
-        categoryNameTextView.setText(categoryName);
+
+        String categoryText = categoryName + " (" + getChildrenCount(groupPosition) + ")";
+        categoryNameTextView.setText(categoryText);
 
         return convertView;
     }
