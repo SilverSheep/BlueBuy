@@ -51,6 +51,38 @@ public class CategoriesWithEntriesProvider {
         prepareCategoriesWithEntries();
     }
 
+    public void moveAllToBasket() {
+
+        EntryProvider entryProvider = new EntryProvider(context);
+        List<CategoryWithEntries> categoriesExcludingBasket = new ArrayList<>(CATEGORIES_WITH_ENTRIES);
+
+        int basketPosition = -1;
+        for (int i = 0; i < categoriesExcludingBasket.size(); ++i) {
+            if (categoriesExcludingBasket.get(i).getCategory().isBasket()) {
+                basketPosition = i;
+            }
+        }
+
+        categoriesExcludingBasket.remove(categoriesExcludingBasket.get(basketPosition));
+
+        for (CategoryWithEntries categoryWithEntries : categoriesExcludingBasket) {
+
+            List<Entry> entries = categoryWithEntries.getEntries();
+
+            for (int i = 0; i < entries.size(); ++i) {
+                Entry entry = entries.get(i);
+                entry.setRecentCategory(entry.getCategory());
+                CategoryWithEntries newCategory = getCategory(basketPosition);
+                entry.setCategory(newCategory.getCategory());
+                newCategory.getEntries().add(entry);
+                entryProvider.updateEntry(entry);
+            }
+        }
+        for (CategoryWithEntries categoryWithEntries : categoriesExcludingBasket) {
+            categoryWithEntries.getEntries().clear();
+        }
+    }
+
     public void moveToBasket(int oldCategoryPosition, Entry entry) {
         for (int i = 0; i < CATEGORIES_WITH_ENTRIES.size(); ++i) {
             if (CATEGORIES_WITH_ENTRIES.get(i).getCategory().isBasket()) {
@@ -130,6 +162,4 @@ public class CategoriesWithEntriesProvider {
             }
         }
     }
-
-
 }

@@ -211,4 +211,10 @@ public class ShoppingListAdapter extends BaseExpandableListAdapter {
 
         dialog.show();
     }
+
+    public void moveAllToBasket() {
+        categoriesWithEntriesProvider.moveAllToBasket();
+        refreshList();
+        notifyDataSetChanged();
+    }
 }
