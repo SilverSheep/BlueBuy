@@ -21,7 +21,6 @@ import pl.cba.marcinbaranowski.bluebuy.adapter.ShoppingListAdapter;
 import pl.cba.marcinbaranowski.bluebuy.model.Category;
 import pl.cba.marcinbaranowski.bluebuy.model.Entry;
 
-//TODO: Prepare class - it's just copied from CategoryListActivity and renamed
 public class ShoppingListActivity extends AppCompatActivity {
 
     public static final int NEW_ENTRY = 1;
@@ -58,18 +57,11 @@ public class ShoppingListActivity extends AppCompatActivity {
 
     private void initializeAddLinks() {
         final TextView addEntryLink = (TextView) findViewById(R.id.add_entry_link);
-        final TextView addCategoryLink = (TextView) findViewById(R.id.add_category_link);
 
         addEntryLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 newEntry();
-            }
-        });
-        addCategoryLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showNewCategoryDialog();
             }
         });
     }

@@ -45,12 +45,12 @@ public class DbHelper extends SQLiteOpenHelper {
     }
 
     public int countCategories() {
-        SQLiteDatabase db = getReadableDatabase();
+        SQLiteDatabase db = getWritableDatabase();
         return (int) DatabaseUtils.queryNumEntries(db, DBConfig.CATEGORY_TABLE_NAME, null, null);
     }
 
     public int countEntries() {
-        SQLiteDatabase db = getReadableDatabase();
+        SQLiteDatabase db = getWritableDatabase();
         return (int) DatabaseUtils.queryNumEntries(db, DBConfig.ENTRY_TABLE_NAME, null, null);
     }
 

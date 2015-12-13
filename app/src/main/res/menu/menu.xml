@@ -2,12 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/action_refresh"
-        android:orderInCategory="100"
-        android:title="Refresh" />
+        android:id="@+id/action_all_to_basket"
+        android:title="Wszystko do koszyka"></item>
 
     <item
-        android:id="@+id/action_settings"
-        android:title="Settings"></item>
+        android:id="@+id/action_reset_list"
+        android:title="Resetuj listę" />
+
+    <item
+        android:id="@+id/action_sync"
+        android:title="Synchronizuj" />
+
+    <item
+        android:id="@+id/action_categories"
+        android:title="Pokaż kategorie" />
 
 </menu>
