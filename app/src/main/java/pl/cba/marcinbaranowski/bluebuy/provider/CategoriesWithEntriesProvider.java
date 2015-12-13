@@ -39,8 +39,22 @@ public class CategoriesWithEntriesProvider {
         CATEGORIES_WITH_ENTRIES.add(category);
     }
 
-    public void removeCategory(CategoryWithEntries category) {
-        CATEGORIES_WITH_ENTRIES.remove(category);
+    public void removeCategory(Category category) {
+        for (int i = 0; i < CATEGORIES_WITH_ENTRIES.size(); ++i) {
+            CategoryWithEntries categoryWithEntries = CATEGORIES_WITH_ENTRIES.get(i);
+            if (categoryWithEntries.getCategory().getName().equals(category.getName())) {
+                removeAllEntriesFromCategory(categoryWithEntries);
+                break;
+            }
+        }
+        categoryProvider.removeCategory(category);
+    }
+
+    private void removeAllEntriesFromCategory(CategoryWithEntries categoryWithEntries) {
+        for (Entry entry:
+             categoryWithEntries.getEntries()) {
+            entryProvider.removeEntry(entry);
+        }
     }
 
     public void removeEntry(int categoryPosition, Entry entry) {
@@ -50,7 +64,6 @@ public class CategoriesWithEntriesProvider {
     }
 
     public void refreshList() {
-        CATEGORIES_WITH_ENTRIES.clear();
         prepareCategoriesWithEntries();
     }
 
@@ -104,6 +117,8 @@ public class CategoriesWithEntriesProvider {
 
     private void prepareCategoriesWithEntries() {
         List<Entry> entries = entryProvider.getEntries();
+
+        CATEGORIES_WITH_ENTRIES.clear();
 
         for (Category category :
                 categoryProvider.getCategories()) {

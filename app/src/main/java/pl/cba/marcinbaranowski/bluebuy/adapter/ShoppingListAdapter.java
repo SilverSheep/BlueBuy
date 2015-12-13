@@ -42,6 +42,7 @@ public class ShoppingListAdapter extends BaseExpandableListAdapter {
 
     public void refreshList() {
         categoriesWithEntriesProvider.refreshList();
+        notifyDataSetChanged();
     }
 
     @Override
@@ -164,7 +165,7 @@ public class ShoppingListAdapter extends BaseExpandableListAdapter {
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this.context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInflater.inflate(R.layout.category_row, null);
+            convertView = infalInflater.inflate(R.layout.simple_category_row, null);
         }
 
         TextView categoryNameTextView = (TextView) convertView
@@ -196,7 +197,6 @@ public class ShoppingListAdapter extends BaseExpandableListAdapter {
             public void onClick(DialogInterface dialogInterface, int i) {
                 categoriesWithEntriesProvider.removeEntry(groupPosition, entry);
                 refreshList();
-                notifyDataSetChanged();
             }
         });
 
@@ -215,12 +215,10 @@ public class ShoppingListAdapter extends BaseExpandableListAdapter {
     public void moveAllToBasket() {
         categoriesWithEntriesProvider.moveAllToBasket();
         refreshList();
-        notifyDataSetChanged();
     }
 
     public void resetList() {
         categoriesWithEntriesProvider.resetList();
         refreshList();
-        notifyDataSetChanged();
     }
 }

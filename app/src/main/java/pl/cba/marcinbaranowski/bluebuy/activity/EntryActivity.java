@@ -38,11 +38,11 @@ public class EntryActivity extends AppCompatActivity {
 
         categorySpinner.setAdapter(categoryListAdapter);
 
-        final Intent i = getIntent();
+        final Intent intent = getIntent();
 
-        final int requestCode = i.getExtras().getInt(ShoppingListActivity.REQUEST_CODE);
-        final Entry entryForEdition = (Entry) i.getExtras().getSerializable(ShoppingListActivity.ENTRY);
-        int categoryPosition = i.getExtras().getInt(ShoppingListActivity.CATEGORY_POSITION);
+        final int requestCode = intent.getExtras().getInt(ShoppingListActivity.REQUEST_CODE);
+        final Entry entryForEdition = (Entry) intent.getExtras().getSerializable(ShoppingListActivity.ENTRY);
+        int categoryPosition = intent.getExtras().getInt(ShoppingListActivity.CATEGORY_POSITION);
 
         Button okButton = (Button) findViewById(R.id.ok_button);
         Button cancelButton = (Button) findViewById(R.id.cancel_button);
@@ -61,10 +61,10 @@ public class EntryActivity extends AppCompatActivity {
                 if (requestCode == ShoppingListActivity.NEW_ENTRY) {
                     entry = prepareEntry();
                 } else if (requestCode == ShoppingListActivity.EDIT_ENTRY) {
-                    Entry entryForEdition = (Entry) i.getExtras().getSerializable(ShoppingListActivity.ENTRY);
+                    Entry entryForEdition = (Entry) intent.getExtras().getSerializable(ShoppingListActivity.ENTRY);
                     entry = prepareEntry(entryForEdition);
                 }
-                setResult(RESULT_OK, i.putExtra(ShoppingListActivity.ENTRY, entry));
+                setResult(RESULT_OK, intent.putExtra(ShoppingListActivity.ENTRY, entry));
                 finish();
             }
         });

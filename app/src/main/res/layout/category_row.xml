@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/category_row"
     android:layout_width="match_parent"
-    android:layout_height="40dp"
-    android:paddingTop="5dp"
-    android:paddingBottom="5dp"
+    android:layout_height="30dp"
     android:background="@color/divider">
 
     <TextView
@@ -12,8 +10,29 @@
         style="@style/PrimaryText"
         android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
         android:gravity="center_vertical"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="match_parent"
-        android:text="category title" />
+        android:text="category title"
+        android:layout_weight="6"/>
 
-</FrameLayout>
+    <ImageView
+        android:id="@+id/edit_category_icon"
+        style="@style/RemoveText"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/edit_icon"
+        android:layout_weight="1"/>
+
+    <ImageView
+        android:id="@+id/remove_category_icon"
+        style="@style/RemoveText"
+        android:layout_marginRight="10dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_centerVertical="true"
+        android:gravity="end"
+        android:src="@drawable/delete_icon"
+        android:layout_weight="1"/>
+
+</LinearLayout>

@@ -80,4 +80,12 @@ public class CategoryProvider {
         db.delete(DBConfig.CATEGORY_TABLE_NAME, WHERE_ID_EQUALS, new String[]{category.getId() + ""});
     }
 
+    public void updateCategory(Category category) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(DBConfig.CATEGORY_COLUMN_NAME, category.getName());
+        values.put(DBConfig.CATEGORY_COLUMN_IS_BASKET, category.isBasket());
+        db.update(DBConfig.CATEGORY_TABLE_NAME, values, DBConfig.CATEGORY_COLUMN_ID + "=" + category.getId(), null);
+    }
 }
