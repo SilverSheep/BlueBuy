@@ -63,6 +63,9 @@ public class ShoppingListActivity extends AppCompatActivity {
             case R.id.action_all_to_basket:
                 shoppingListAdapter.moveAllToBasket();
                 return true;
+            case R.id.action_reset_list:
+                shoppingListAdapter.resetList();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

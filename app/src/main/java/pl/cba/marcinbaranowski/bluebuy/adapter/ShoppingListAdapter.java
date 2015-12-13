@@ -93,9 +93,9 @@ public class ShoppingListAdapter extends BaseExpandableListAdapter {
             public void onClick(View v) {
 
                 if (isBasket) {
-                    categoriesWithEntriesProvider.moveBackToOriginalCategory(groupPosition, entry);
+                    categoriesWithEntriesProvider.moveBackToOriginalCategory(entry);
                 } else {
-                    categoriesWithEntriesProvider.moveToBasket(groupPosition, entry);
+                    categoriesWithEntriesProvider.moveToBasket(entry);
                 }
                 refreshList();
                 notifyDataSetChanged();
@@ -214,6 +214,12 @@ public class ShoppingListAdapter extends BaseExpandableListAdapter {
 
     public void moveAllToBasket() {
         categoriesWithEntriesProvider.moveAllToBasket();
+        refreshList();
+        notifyDataSetChanged();
+    }
+
+    public void resetList() {
+        categoriesWithEntriesProvider.resetList();
         refreshList();
         notifyDataSetChanged();
     }

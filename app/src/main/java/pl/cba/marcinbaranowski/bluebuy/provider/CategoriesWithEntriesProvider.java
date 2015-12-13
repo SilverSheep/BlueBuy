@@ -17,9 +17,13 @@ public class CategoriesWithEntriesProvider {
     private static final List<CategoryWithEntries> CATEGORIES_WITH_ENTRIES = new ArrayList<>();
 
     private Context context;
+    CategoryProvider categoryProvider;
+    EntryProvider entryProvider;
 
     public CategoriesWithEntriesProvider(Context context) {
         this.context = context;
+        categoryProvider = new CategoryProvider(context);
+         entryProvider = new EntryProvider(context);
         prepareCategoriesWithEntries();
     }
 
@@ -40,7 +44,6 @@ public class CategoriesWithEntriesProvider {
     }
 
     public void removeEntry(int categoryPosition, Entry entry) {
-        EntryProvider entryProvider = new EntryProvider(context);
         CATEGORIES_WITH_ENTRIES.get(categoryPosition).getEntries().remove(entry);
 
         entryProvider.removeEntry(entry);
@@ -51,96 +54,55 @@ public class CategoriesWithEntriesProvider {
         prepareCategoriesWithEntries();
     }
 
+    public void resetList() {
+        for (int i = 0; i < CATEGORIES_WITH_ENTRIES.size(); ++i) {
+            List<Entry> entries = CATEGORIES_WITH_ENTRIES.get(i).getEntries();
+            for (int j = 0; j < entries.size(); ++j) {
+                Entry entry = entries.get(j);
+                moveBackToOriginalCategory(entry);
+            }
+        }
+        refreshList();
+    }
+
     public void moveAllToBasket() {
-
-        EntryProvider entryProvider = new EntryProvider(context);
-        List<CategoryWithEntries> categoriesExcludingBasket = new ArrayList<>(CATEGORIES_WITH_ENTRIES);
-
-        int basketPosition = -1;
-        for (int i = 0; i < categoriesExcludingBasket.size(); ++i) {
-            if (categoriesExcludingBasket.get(i).getCategory().isBasket()) {
-                basketPosition = i;
-            }
-        }
-
-        categoriesExcludingBasket.remove(categoriesExcludingBasket.get(basketPosition));
-
-        for (CategoryWithEntries categoryWithEntries : categoriesExcludingBasket) {
-
-            List<Entry> entries = categoryWithEntries.getEntries();
-
-            for (int i = 0; i < entries.size(); ++i) {
-                Entry entry = entries.get(i);
-                entry.setRecentCategory(entry.getCategory());
-                CategoryWithEntries newCategory = getCategory(basketPosition);
-                entry.setCategory(newCategory.getCategory());
-                newCategory.getEntries().add(entry);
-                entryProvider.updateEntry(entry);
-            }
-        }
-        for (CategoryWithEntries categoryWithEntries : categoriesExcludingBasket) {
-            categoryWithEntries.getEntries().clear();
-        }
-    }
-
-    public void moveToBasket(int oldCategoryPosition, Entry entry) {
         for (int i = 0; i < CATEGORIES_WITH_ENTRIES.size(); ++i) {
-            if (CATEGORIES_WITH_ENTRIES.get(i).getCategory().isBasket()) {
-                moveEntryToOtherCategory(oldCategoryPosition, i, entry);
+            List<Entry> entries = CATEGORIES_WITH_ENTRIES.get(i).getEntries();
+            for (int j = 0; j < entries.size(); ++j) {
+                Entry entry = entries.get(j);
+                moveToBasket(entry);
             }
         }
+        refreshList();
     }
 
-    public void moveBackToOriginalCategory(int basketCategoryPosition, Entry entry) {
-        boolean isOriginalCategoryEmpty = true;
-        for (int i = 0; i < CATEGORIES_WITH_ENTRIES.size(); ++i) {
-            String categoryName = CATEGORIES_WITH_ENTRIES.get(i).getCategory().getName();
-            String entryCategoryName = entry.getRecentCategory().getName();
-            if (categoryName.equals(entryCategoryName)) {
-                moveEntryToOtherCategory(basketCategoryPosition, i, entry);
-                isOriginalCategoryEmpty = false;
-            }
-        }
-        if (isOriginalCategoryEmpty) {
-            moveEntryToEmptyCategory(basketCategoryPosition, entry.getRecentCategory(), entry);
-        }
-    }
-
-    private void moveEntryToEmptyCategory(int oldCategoryPosition, Category emptyCategory, Entry entry) {
-        CategoryWithEntries oldCategory = getCategory(oldCategoryPosition);
-
-        if (!oldCategory.getCategory().isBasket()) {
-            entry.setRecentCategory(entry.getCategory());
-        }
-
-        oldCategory.getEntries().remove(entry);
-
-        EntryProvider entryProvider = new EntryProvider(context);
-
-        entry.setCategory(emptyCategory);
-        prepareCategoriesWithEntries();
+    public void moveToBasket(Entry entry) {
+        entry.setRecentCategory(entry.getCategory());
+        entry.setCategory(getBasket());
         entryProvider.updateEntry(entry);
     }
 
-    private void moveEntryToOtherCategory(int oldCategoryPosition, int newCategoryPosition, Entry entry) {
-        CategoryWithEntries oldCategory = getCategory(oldCategoryPosition);
+    public void moveBackToOriginalCategory(Entry entry) {
+        if (entry.getRecentCategory() != null) {
+            entry.setCategory(entry.getRecentCategory());
+            entryProvider.updateEntry(entry);
+        }
+    }
 
-        if (!oldCategory.getCategory().isBasket()) {
-            entry.setRecentCategory(entry.getCategory());
+    private Category getBasket() {
+        for (int i = 0; i < CATEGORIES_WITH_ENTRIES.size(); ++i) {
+            CategoryWithEntries categoryWithEntries = CATEGORIES_WITH_ENTRIES.get(i);
+
+            Category category = categoryWithEntries.getCategory();
+            if (category.isBasket()) {
+                return category;
+            }
         }
 
-        oldCategory.getEntries().remove(entry);
-        EntryProvider entryProvider = new EntryProvider(context);
-
-        CategoryWithEntries newCategory = getCategory(newCategoryPosition);
-        entry.setCategory(newCategory.getCategory());
-        newCategory.getEntries().add(entry);
-        entryProvider.updateEntry(entry);
+        return null;
     }
 
     private void prepareCategoriesWithEntries() {
-        CategoryProvider categoryProvider = new CategoryProvider(context);
-        EntryProvider entryProvider = new EntryProvider(context);
         List<Entry> entries = entryProvider.getEntries();
 
         for (Category category :
