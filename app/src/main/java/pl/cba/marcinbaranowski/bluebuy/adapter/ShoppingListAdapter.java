@@ -17,6 +17,7 @@ import android.widget.TextView;
 import pl.cba.marcinbaranowski.bluebuy.R;
 import pl.cba.marcinbaranowski.bluebuy.activity.EntryActivity;
 import pl.cba.marcinbaranowski.bluebuy.activity.ShoppingListActivity;
+import pl.cba.marcinbaranowski.bluebuy.model.CategoryType;
 import pl.cba.marcinbaranowski.bluebuy.model.CategoryWithEntries;
 import pl.cba.marcinbaranowski.bluebuy.model.Entry;
 import pl.cba.marcinbaranowski.bluebuy.provider.CategoriesWithEntriesProvider;
@@ -82,7 +83,7 @@ public class ShoppingListAdapter extends BaseExpandableListAdapter {
 
         CategoryWithEntries category = categoriesWithEntriesProvider.getCategory(groupPosition);
 
-        final Boolean isBasket = category.getCategory().isBasket();
+        final Boolean isBasket = category.getCategory().getType().equals(CategoryType.BASKET);
 
         final CheckBox addToBasketCheckBox = (CheckBox) convertView.findViewById(R.id.add_to_basket);
 

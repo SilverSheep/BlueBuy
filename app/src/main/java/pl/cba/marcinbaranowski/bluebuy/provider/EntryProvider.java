@@ -11,6 +11,7 @@ import java.util.List;
 import pl.cba.marcinbaranowski.bluebuy.config.DBConfig;
 import pl.cba.marcinbaranowski.bluebuy.db.DbHelper;
 import pl.cba.marcinbaranowski.bluebuy.model.Category;
+import pl.cba.marcinbaranowski.bluebuy.model.CategoryType;
 import pl.cba.marcinbaranowski.bluebuy.model.Entry;
 
 /**
@@ -23,7 +24,7 @@ public class EntryProvider {
     private static final String WHERE_ID_EQUALS = DBConfig.ENTRY_COLUMN_ID + " =?";
     private static final String CATEGORY_NAME_WITH_PREFIX = "cat.name";
     private static final String RECENT_CATEGORY_NAME_PREFIX = "rcat.name";
-    private static final String CATEGORY_IS_BASKET_WITH_PREFIX = "cat.is_basket";
+    private static final String CATEGORY_TYPE_WITH_PREFIX = "cat.type";
 
     public EntryProvider(Context context) {
         dbHelper = new DbHelper(context);
@@ -41,7 +42,7 @@ public class EntryProvider {
                 + DBConfig.ENTRY_COLUMN_CATEGORY_ID + ","
                 + DBConfig.ENTRY_COLUMN_RECENT_CATEGORY_ID + ","
                 + CATEGORY_NAME_WITH_PREFIX + ","
-                + CATEGORY_IS_BASKET_WITH_PREFIX + ","
+                + CATEGORY_TYPE_WITH_PREFIX + ","
                 + RECENT_CATEGORY_NAME_PREFIX + " FROM "
                 + DBConfig.ENTRY_TABLE_NAME + " ent, "
                 + DBConfig.CATEGORY_TABLE_NAME + " cat, "
@@ -63,18 +64,18 @@ public class EntryProvider {
             int categoryId = cursor.getInt(5);
             int recentCategoryId = cursor.getInt(6);
             String categoryName = cursor.getString(7);
-            Boolean isBasket = cursor.getInt(8) == 1;
+            CategoryType categoryType = CategoryType.values()[cursor.getInt(8)];
 
             String recentCategoryName = cursor.getString(9);
 
             cursor.close();
 
-            Category category = new Category(categoryId, categoryName, isBasket);
+            Category category = new Category(categoryId, categoryName, categoryType);
 
             if (categoryId == recentCategoryId) {
                 return new Entry(id, category, name, quantity, unit, comment);
             } else {
-                Category recentCategory = new Category(recentCategoryId, recentCategoryName, false);
+                Category recentCategory = new Category(recentCategoryId, recentCategoryName, CategoryType.REGULAR);
 
                 return new Entry(id, category, recentCategory, name, quantity, unit, comment);
             }

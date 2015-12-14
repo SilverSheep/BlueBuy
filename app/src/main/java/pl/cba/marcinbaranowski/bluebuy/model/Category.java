@@ -2,22 +2,21 @@ package pl.cba.marcinbaranowski.bluebuy.model;
 
 import java.io.Serializable;
 
-
 public class Category implements Serializable {
 
     private int id;
     private String name;
-    private Boolean isBasket;
+    private CategoryType type;
 
-    public Category(String name, Boolean isBasket) {
+    public Category(String name, CategoryType type) {
         this.name = name;
-        this.isBasket = isBasket;
+        this.type = type;
     }
 
-    public Category(int id, String name, Boolean isBasket) {
+    public Category(int id, String name, CategoryType type) {
         this.id = id;
         this.name = name;
-        this.isBasket = isBasket;
+        this.type = type;
     }
 
     public int getId() {
@@ -36,11 +35,11 @@ public class Category implements Serializable {
         this.name = name;
     }
 
-    public Boolean isBasket() {
-        return isBasket;
+    public CategoryType getType() {
+        return type;
     }
 
-    public void setIsBasket(Boolean isBasket) {
-        this.isBasket = isBasket;
+    public void setType(CategoryType type) {
+        this.type = type;
     }
 }

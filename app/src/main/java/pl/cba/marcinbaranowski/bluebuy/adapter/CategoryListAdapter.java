@@ -15,6 +15,7 @@ import pl.cba.marcinbaranowski.bluebuy.R;
 import pl.cba.marcinbaranowski.bluebuy.activity.CategoryListActivity;
 import pl.cba.marcinbaranowski.bluebuy.activity.EntryActivity;
 import pl.cba.marcinbaranowski.bluebuy.model.Category;
+import pl.cba.marcinbaranowski.bluebuy.model.CategoryType;
 import pl.cba.marcinbaranowski.bluebuy.provider.CategoriesWithEntriesProvider;
 import pl.cba.marcinbaranowski.bluebuy.provider.CategoryProvider;
 
@@ -84,7 +85,7 @@ public class CategoryListAdapter extends BaseAdapter {
         final ImageView editIcon = (ImageView) categoryView.findViewById(R.id.edit_category_icon);
         final ImageView removeIcon = (ImageView) categoryView.findViewById(R.id.remove_category_icon);
 
-        if ((context instanceof EntryActivity) || category.isBasket()) {
+        if ((context instanceof EntryActivity) || !category.getType().equals(CategoryType.REGULAR)) {
             editIcon.setVisibility(View.INVISIBLE);
             removeIcon.setVisibility(View.INVISIBLE);
         } else {
@@ -102,7 +103,6 @@ public class CategoryListAdapter extends BaseAdapter {
                 }
             });
         }
-
     }
 
     private void showEditCategoryDialog(final Category category) {

@@ -11,7 +11,7 @@ public class DBConfig {
 
     public static final String CATEGORY_COLUMN_ID = "category_id";
     public static final String CATEGORY_COLUMN_NAME = "name";
-    public static final String CATEGORY_COLUMN_IS_BASKET = "is_basket";
+    public static final String CATEGORY_COLUMN_TYPE = "type";
 
     public static final String ENTRY_COLUMN_ID = "entry_id";
     public static final String ENTRY_COLUMN_NAME = "name";

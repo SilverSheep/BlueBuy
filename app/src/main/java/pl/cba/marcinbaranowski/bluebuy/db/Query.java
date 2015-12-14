@@ -3,6 +3,7 @@ package pl.cba.marcinbaranowski.bluebuy.db;
 import java.util.List;
 
 import pl.cba.marcinbaranowski.bluebuy.config.DBConfig;
+import pl.cba.marcinbaranowski.bluebuy.model.CategoryType;
 
 /**
  * Created by flipflap on 10.12.15.
@@ -10,13 +11,13 @@ import pl.cba.marcinbaranowski.bluebuy.config.DBConfig;
 class Query {
 
     private static final String INSERT_TO_CATEGORY_TABLE_PREFIX = "INSERT INTO " + DBConfig.CATEGORY_TABLE_NAME +
-            " (" + DBConfig.CATEGORY_COLUMN_NAME + ", " + DBConfig.CATEGORY_COLUMN_IS_BASKET + ") ";
+            " (" + DBConfig.CATEGORY_COLUMN_NAME + ", " + DBConfig.CATEGORY_COLUMN_TYPE + ") ";
 
     static final String CATEGORY_TABLE_CREATE =
             "CREATE TABLE " + DBConfig.CATEGORY_TABLE_NAME + " (" +
                     DBConfig.CATEGORY_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
                     DBConfig.CATEGORY_COLUMN_NAME + " TEXT NOT NULL, " +
-                    DBConfig.CATEGORY_COLUMN_IS_BASKET + " INTEGER NOT NULL);";
+                    DBConfig.CATEGORY_COLUMN_TYPE + " INTEGER NOT NULL);";
 
     static final String ENTRY_TABLE_CREATE =
             "CREATE TABLE " + DBConfig.ENTRY_TABLE_NAME + " (" +
@@ -36,7 +37,7 @@ class Query {
     static final String SQL_DELETE_CATEGORIES = "DROP TABLE IF EXISTS " + DBConfig.CATEGORY_TABLE_NAME;
     static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + DBConfig.ENTRY_TABLE_NAME;
 
-    static String prepareCategoryInsertQuery(List<String> categories) {
+    static String prepareCategoryInsertQuery(List<String> categoryNames) {
         String SELECT = "SELECT '";
         String UNION = "UNION ALL\n";
 
@@ -44,14 +45,23 @@ class Query {
 
         sb.append(INSERT_TO_CATEGORY_TABLE_PREFIX);
 
-        for (int i=0; i<categories.size(); ++i) {
-            String categoryName = categories.get(i);
+        for (int i=0; i<categoryNames.size(); ++i) {
+            String categoryName = categoryNames.get(i);
 
-            int isBasket = categoryName.equals("koszyk") ? 1 : 0;
+            int type = CategoryType.REGULAR.ordinal();
 
-            sb.append(SELECT + categoryName + "', " + isBasket);
+            switch (categoryName) {
+                case "koszyk":
+                    type = CategoryType.BASKET.ordinal();
+                    break;
+                case "inne":
+                    type = CategoryType.OTHERS.ordinal();
+                    break;
+            }
 
-            if (i < categories.size()-1) {
+            sb.append(SELECT + categoryName + "', " + type);
+
+            if (i < categoryNames.size()-1) {
                 sb.append(" " + UNION);
             }
         }

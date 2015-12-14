@@ -14,6 +14,7 @@ import android.widget.TextView;
 import pl.cba.marcinbaranowski.bluebuy.R;
 import pl.cba.marcinbaranowski.bluebuy.adapter.CategoryListAdapter;
 import pl.cba.marcinbaranowski.bluebuy.model.Category;
+import pl.cba.marcinbaranowski.bluebuy.model.CategoryType;
 
 public class CategoryListActivity extends AppCompatActivity {
 
@@ -83,7 +84,7 @@ public class CategoryListActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 //TODO: ADD Category name validation
 
-                addCategory(new Category(categoryNameInput.getText().toString(), false));
+                addCategory(new Category(categoryNameInput.getText().toString(), CategoryType.REGULAR));
                 nothingHasChanged = false;
             }
         });

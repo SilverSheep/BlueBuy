@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pl.cba.marcinbaranowski.bluebuy.model.Category;
+import pl.cba.marcinbaranowski.bluebuy.model.CategoryType;
 import pl.cba.marcinbaranowski.bluebuy.model.CategoryWithEntries;
 import pl.cba.marcinbaranowski.bluebuy.model.Entry;
 
@@ -23,7 +24,7 @@ public class CategoriesWithEntriesProvider {
     public CategoriesWithEntriesProvider(Context context) {
         this.context = context;
         categoryProvider = new CategoryProvider(context);
-         entryProvider = new EntryProvider(context);
+        entryProvider = new EntryProvider(context);
         prepareCategoriesWithEntries();
     }
 
@@ -43,17 +44,29 @@ public class CategoriesWithEntriesProvider {
         for (int i = 0; i < CATEGORIES_WITH_ENTRIES.size(); ++i) {
             CategoryWithEntries categoryWithEntries = CATEGORIES_WITH_ENTRIES.get(i);
             if (categoryWithEntries.getCategory().getName().equals(category.getName())) {
-                removeAllEntriesFromCategory(categoryWithEntries);
+                moveEntriesToOthers(categoryWithEntries.getEntries());
                 break;
             }
         }
         categoryProvider.removeCategory(category);
     }
 
-    private void removeAllEntriesFromCategory(CategoryWithEntries categoryWithEntries) {
-        for (Entry entry:
-             categoryWithEntries.getEntries()) {
-            entryProvider.removeEntry(entry);
+    private void moveEntriesToOthers(List<Entry> entries) {
+        for (Entry entry :
+                entries) {
+            moveEntryToOthers(entry);
+        }
+    }
+
+    private void moveEntryToOthers(Entry entry) {
+        List<Category> categories = categoryProvider.getCategories();
+        for (int i=0; i < categories.size(); ++i) {
+            Category category = categories.get(i);
+            if (category.getName().equals("inne")) {
+                entry.setCategory(category);
+                entry.setRecentCategory(category);
+                entryProvider.updateEntry(entry);
+            }
         }
     }
 
@@ -107,7 +120,7 @@ public class CategoriesWithEntriesProvider {
             CategoryWithEntries categoryWithEntries = CATEGORIES_WITH_ENTRIES.get(i);
 
             Category category = categoryWithEntries.getCategory();
-            if (category.isBasket()) {
+            if (category.getType().equals(CategoryType.BASKET)) {
                 return category;
             }
         }
@@ -133,7 +146,7 @@ public class CategoriesWithEntriesProvider {
                     categoryEntries.add(entry);
                 }
             }
-            if (!categoryEntries.isEmpty() || category.isBasket()) {
+            if (!categoryEntries.isEmpty() || category.getType().equals(CategoryType.BASKET)) {
                 addCategory(new CategoryWithEntries(category, categoryEntries));
                 entries.removeAll(categoryEntries);
             }

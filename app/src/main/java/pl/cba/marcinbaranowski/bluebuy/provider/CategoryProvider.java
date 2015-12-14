@@ -11,6 +11,7 @@ import java.util.List;
 import pl.cba.marcinbaranowski.bluebuy.config.DBConfig;
 import pl.cba.marcinbaranowski.bluebuy.db.DbHelper;
 import pl.cba.marcinbaranowski.bluebuy.model.Category;
+import pl.cba.marcinbaranowski.bluebuy.model.CategoryType;
 
 public class CategoryProvider {
 
@@ -26,7 +27,7 @@ public class CategoryProvider {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         String[] projection = {
-                DBConfig.CATEGORY_COLUMN_ID, DBConfig.CATEGORY_COLUMN_NAME, DBConfig.CATEGORY_COLUMN_IS_BASKET
+                DBConfig.CATEGORY_COLUMN_ID, DBConfig.CATEGORY_COLUMN_NAME, DBConfig.CATEGORY_COLUMN_TYPE
         };
 
         String sortOrder = DBConfig.CATEGORY_COLUMN_NAME + " DESC";
@@ -45,9 +46,9 @@ public class CategoryProvider {
 
         int id = cursor.getInt(0);
         String name = cursor.getString(1);
-        Boolean isBasket = cursor.getInt(2) == 1;
+        CategoryType categoryType = CategoryType.values()[cursor.getInt(2)];
 
-        return new Category(id, name, isBasket);
+        return new Category(id, name, categoryType);
     }
 
     public int getCategoriesSize() {
@@ -69,7 +70,7 @@ public class CategoryProvider {
 
         ContentValues values = new ContentValues();
         values.put(DBConfig.CATEGORY_COLUMN_NAME, category.getName());
-        values.put(DBConfig.CATEGORY_COLUMN_IS_BASKET, false);
+        values.put(DBConfig.CATEGORY_COLUMN_TYPE, false);
 
         db.insert(DBConfig.CATEGORY_TABLE_NAME, null, values);
     }
@@ -85,7 +86,7 @@ public class CategoryProvider {
 
         ContentValues values = new ContentValues();
         values.put(DBConfig.CATEGORY_COLUMN_NAME, category.getName());
-        values.put(DBConfig.CATEGORY_COLUMN_IS_BASKET, category.isBasket());
+        values.put(DBConfig.CATEGORY_COLUMN_TYPE, category.getType().ordinal());
         db.update(DBConfig.CATEGORY_TABLE_NAME, values, DBConfig.CATEGORY_COLUMN_ID + "=" + category.getId(), null);
     }
 }
