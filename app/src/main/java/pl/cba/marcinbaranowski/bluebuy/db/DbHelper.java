@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import pl.cba.marcinbaranowski.bluebuy.config.DBConfig;
+import pl.cba.marcinbaranowski.bluebuy.model.CategoryType;
 
 public class DbHelper extends SQLiteOpenHelper {
 
@@ -47,6 +48,12 @@ public class DbHelper extends SQLiteOpenHelper {
     public int countCategories() {
         SQLiteDatabase db = getWritableDatabase();
         return (int) DatabaseUtils.queryNumEntries(db, DBConfig.CATEGORY_TABLE_NAME, null, null);
+    }
+
+    public int countRegularCategories() {
+        SQLiteDatabase db = getWritableDatabase();
+        return (int) DatabaseUtils.queryNumEntries(db, DBConfig.CATEGORY_TABLE_NAME,
+                "type=" + CategoryType.REGULAR.ordinal(), null);
     }
 
     public int countEntries() {
