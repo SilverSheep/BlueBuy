@@ -101,6 +101,7 @@ public class CategoryProvider {
         String name = cursor.getString(1);
         CategoryType categoryType = CategoryType.values()[cursor.getInt(2)];
 
+        cursor.close();
         return new Category(id, name, categoryType);
     }
 }
