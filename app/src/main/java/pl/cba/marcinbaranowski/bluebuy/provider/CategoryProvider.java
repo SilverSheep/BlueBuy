@@ -83,16 +83,16 @@ public class CategoryProvider {
                 DBConfig.CATEGORY_COLUMN_ID, DBConfig.CATEGORY_COLUMN_NAME, DBConfig.CATEGORY_COLUMN_TYPE
         };
 
-        String sortOrder = DBConfig.CATEGORY_COLUMN_NAME + " DESC";
+        String sortOrder = DBConfig.CATEGORY_COLUMN_TYPE + " ASC, " + DBConfig.CATEGORY_COLUMN_NAME + " ASC";
 
         Cursor cursor = db.query(
-                DBConfig.CATEGORY_TABLE_NAME,  // The table to query
-                projection,                    // The columns to return
-                whereCondition,                // The columns for the WHERE clause
-                columnsForWhereCondition,      // The values for the WHERE clause
-                null,                          // don't group the rows
+                DBConfig.CATEGORY_TABLE_NAME,  // table to query
+                projection,                    // columns to return
+                whereCondition,                // columns for the WHERE clause
+                columnsForWhereCondition,      // values for the WHERE clause
+                null,                          // group by
                 null,                          // don't filter by row groups
-                sortOrder                      // The sort order
+                sortOrder                      // sort order
         );
 
         cursor.moveToPosition(position);

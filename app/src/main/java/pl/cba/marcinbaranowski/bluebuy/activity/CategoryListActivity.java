@@ -8,8 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import pl.cba.marcinbaranowski.bluebuy.R;
 import pl.cba.marcinbaranowski.bluebuy.adapter.CategoryListAdapter;
@@ -31,7 +31,7 @@ public class CategoryListActivity extends AppCompatActivity {
 
         intent = getIntent();
 
-        initializeAddCategoryLink();
+        initializeAddCategoryIcon();
         initializeList();
     }
 
@@ -45,10 +45,10 @@ public class CategoryListActivity extends AppCompatActivity {
         this.nothingHasChanged = nothingHasChanged;
     }
 
-    private void initializeAddCategoryLink() {
-        final TextView addCategoryLink = (TextView) findViewById(R.id.add_category_link);
+    private void initializeAddCategoryIcon() {
+        final ImageView addCategoryIcon = (ImageView) findViewById(R.id.add_category_icon);
 
-        addCategoryLink.setOnClickListener(new View.OnClickListener() {
+        addCategoryIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showNewCategoryDialog();

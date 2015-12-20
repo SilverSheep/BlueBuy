@@ -5,8 +5,8 @@ package pl.cba.marcinbaranowski.bluebuy.model;
  */
 public enum CategoryType {
     REGULAR(0),
-    BASKET(1),
-    OTHERS(2);
+    OTHERS(1),
+    BIN(2);
 
     private final int value;
 

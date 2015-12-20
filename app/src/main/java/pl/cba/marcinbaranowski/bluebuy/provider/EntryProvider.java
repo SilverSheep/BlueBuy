@@ -31,7 +31,7 @@ public class EntryProvider {
     }
 
     public Entry getEntry(int position) {
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         // TODO: Sort entries
         String query = "SELECT " + DBConfig.ENTRY_COLUMN_ID + ",ent."
@@ -50,7 +50,8 @@ public class EntryProvider {
                 + DBConfig.ENTRY_COLUMN_CATEGORY_ID + " = cat."
                 + DBConfig.CATEGORY_COLUMN_ID + " AND "
                 + DBConfig.ENTRY_COLUMN_RECENT_CATEGORY_ID + " = rcat."
-                + DBConfig.CATEGORY_COLUMN_ID;
+                + DBConfig.CATEGORY_COLUMN_ID + " ORDER BY ent."
+                + DBConfig.ENTRY_COLUMN_NAME + " ASC;";
 
         Cursor cursor = db.rawQuery(query, null);
 

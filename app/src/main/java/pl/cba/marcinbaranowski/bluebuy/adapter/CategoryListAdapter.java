@@ -34,7 +34,7 @@ public class CategoryListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return categoryProvider.getRegularCategoriesSize();  // excluding basket
+        return categoryProvider.getRegularCategoriesSize();  // excluding bin
     }
 
     @Override
@@ -91,6 +91,10 @@ public class CategoryListAdapter extends BaseAdapter {
             editIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    // TODO: Dodać typ IRREMOVABLE (albo primary)
+//                    if (!category.getType().equals(CategoryType.IRREMOVABLE)) {
+//                        Toast.makeText(context, "Nie można edytować tej kategorii", Toast.LENGTH_LONG).show();
+//                    }
                     showEditCategoryDialog(category);
                 }
             });
@@ -98,6 +102,10 @@ public class CategoryListAdapter extends BaseAdapter {
             removeIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    // TODO: Dodać typ IRREMOVABLE (albo primary)
+                   // if (!category.getType().equals(CategoryType.IRREMOVABLE)) {
+                     //   Toast.makeText(context, "Nie można usunąć tej kategorii", Toast.LENGTH_LONG).show();
+                    //}
                     showConfirmCategoryDeletionDialog(category);
                 }
             });
@@ -140,7 +148,7 @@ public class CategoryListAdapter extends BaseAdapter {
     private void showConfirmCategoryDeletionDialog(final Category category) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
-        builder.setMessage("Usunąć kategorię wraz ze wszystkimi jej produktami?").setTitle("Jesteś pewna?");
+        builder.setMessage("Usunąć kategorię?").setTitle("Jesteś pewna?");
 
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override

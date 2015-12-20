@@ -83,33 +83,33 @@ public class ShoppingListAdapter extends BaseExpandableListAdapter {
 
         CategoryWithEntries category = categoriesWithEntriesProvider.getCategory(groupPosition);
 
-        final Boolean isBasket = category.getCategory().getType().equals(CategoryType.BASKET);
+        final Boolean isBin = category.getCategory().getType().equals(CategoryType.BIN);
 
-        final CheckBox addToBasketCheckBox = (CheckBox) convertView.findViewById(R.id.add_to_basket);
+        final CheckBox addToBinCheckBox = (CheckBox) convertView.findViewById(R.id.add_to_bin);
 
         // todo: why this doesn't work?
-        addToBasketCheckBox.setSelected(isBasket);
+        addToBinCheckBox.setSelected(isBin);
 
-        addToBasketCheckBox.setOnClickListener(new View.OnClickListener() {
+        addToBinCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (isBasket) {
+                if (isBin) {
                     categoriesWithEntriesProvider.moveBackToOriginalCategory(entry);
                 } else {
-                    categoriesWithEntriesProvider.moveToBasket(entry);
+                    categoriesWithEntriesProvider.moveToBin(entry);
                 }
                 refreshList();
                 notifyDataSetChanged();
             }
         });
 
-        addToBasketCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        addToBinCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
             @Override
             public void onCheckedChanged(CompoundButton buttonView,
                                          boolean isChecked) {
-                addToBasketCheckBox.setChecked(!isChecked);
+                addToBinCheckBox.setChecked(!isChecked);
             }
         });
 
@@ -213,8 +213,8 @@ public class ShoppingListAdapter extends BaseExpandableListAdapter {
         dialog.show();
     }
 
-    public void moveAllToBasket() {
-        categoriesWithEntriesProvider.moveAllToBasket();
+    public void moveAllToBin() {
+        categoriesWithEntriesProvider.moveAllToBin();
         refreshList();
     }
 

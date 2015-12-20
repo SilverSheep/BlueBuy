@@ -8,7 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
-import android.widget.TextView;
+import android.widget.ImageView;
 
 import pl.cba.marcinbaranowski.bluebuy.R;
 import pl.cba.marcinbaranowski.bluebuy.adapter.CategoryListAdapter;
@@ -41,7 +41,7 @@ public class ShoppingListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.shopping_list);
 
-        initializeAddLinks();
+        initializeAddIcon();
         initializeList();
     }
 
@@ -56,8 +56,8 @@ public class ShoppingListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-            case R.id.action_all_to_basket:
-                shoppingListAdapter.moveAllToBasket();
+            case R.id.action_all_to_bin:
+                shoppingListAdapter.moveAllToBin();
                 return true;
             case R.id.action_reset_list:
                 shoppingListAdapter.resetList();
@@ -76,10 +76,10 @@ public class ShoppingListActivity extends AppCompatActivity {
         startActivityForResult(intent, CATEGORY_LIST);
     }
 
-    private void initializeAddLinks() {
-        final TextView addEntryLink = (TextView) findViewById(R.id.add_entry_link);
+    private void initializeAddIcon() {
+        final ImageView addEntryIcon = (ImageView) findViewById(R.id.add_entry_icon);
 
-        addEntryLink.setOnClickListener(new View.OnClickListener() {
+        addEntryIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 newEntry();

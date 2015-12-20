@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:id="@+id/add_to_basket" />
+        android:id="@+id/add_to_bin" />
 
     <TextView
         android:id="@+id/entry"
@@ -20,8 +20,8 @@
         android:layout_height="wrap_content"
         android:text="entry name"
         android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/add_to_basket"
-        android:layout_toEndOf="@+id/add_to_basket" />
+        android:layout_toRightOf="@+id/add_to_bin"
+        android:layout_toEndOf="@+id/add_to_bin" />
 
     <ImageView
         android:id="@+id/edit_icon"

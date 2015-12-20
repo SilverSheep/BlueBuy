@@ -43,12 +43,40 @@ public class CategoriesWithEntriesProvider {
     public void removeCategory(Category category) {
         for (int i = 0; i < CATEGORIES_WITH_ENTRIES.size(); ++i) {
             CategoryWithEntries categoryWithEntries = CATEGORIES_WITH_ENTRIES.get(i);
+
             if (categoryWithEntries.getCategory().getName().equals(category.getName())) {
+
                 moveEntriesToOthers(categoryWithEntries.getEntries());
-                break;
+
+            } else if (categoryWithEntries.getCategory().getType().equals(CategoryType.BIN)) {
+
+                List<Entry> entries = categoryWithEntries.getEntries();
+                if (entries.size() > 0) {
+                    setRecentCategoryOfAbandonedEntryInBin(category, entries);
+                }
+
             }
         }
         categoryProvider.removeCategory(category);
+    }
+
+    private void setRecentCategoryOfAbandonedEntryInBin(Category removedCategory, List<Entry> entries) {
+        List<Category> categories = categoryProvider.getCategories();
+        Category others = null;
+
+        for (Category cat :
+                categories) {
+            if (cat.getType().equals(CategoryType.OTHERS)) {
+                others = cat;
+            }
+        }
+        for (Entry entry :
+                entries) {
+            if (entry.getRecentCategory().getName().equals(removedCategory.getName())) {
+                entry.setRecentCategory(others);
+                entryProvider.updateEntry(entry);
+            }
+        }
     }
 
     private void moveEntriesToOthers(List<Entry> entries) {
@@ -60,7 +88,7 @@ public class CategoriesWithEntriesProvider {
 
     private void moveEntryToOthers(Entry entry) {
         List<Category> categories = categoryProvider.getCategories();
-        for (int i=0; i < categories.size(); ++i) {
+        for (int i = 0; i < categories.size(); ++i) {
             Category category = categories.get(i);
             if (category.getName().equals("inne")) {
                 entry.setCategory(category);
@@ -91,20 +119,20 @@ public class CategoriesWithEntriesProvider {
         refreshList();
     }
 
-    public void moveAllToBasket() {
+    public void moveAllToBin() {
         for (int i = 0; i < CATEGORIES_WITH_ENTRIES.size(); ++i) {
             List<Entry> entries = CATEGORIES_WITH_ENTRIES.get(i).getEntries();
             for (int j = 0; j < entries.size(); ++j) {
                 Entry entry = entries.get(j);
-                moveToBasket(entry);
+                moveToBin(entry);
             }
         }
         refreshList();
     }
 
-    public void moveToBasket(Entry entry) {
+    public void moveToBin(Entry entry) {
         entry.setRecentCategory(entry.getCategory());
-        entry.setCategory(getBasket());
+        entry.setCategory(getBin());
         entryProvider.updateEntry(entry);
     }
 
@@ -115,12 +143,12 @@ public class CategoriesWithEntriesProvider {
         }
     }
 
-    private Category getBasket() {
+    private Category getBin() {
         for (int i = 0; i < CATEGORIES_WITH_ENTRIES.size(); ++i) {
             CategoryWithEntries categoryWithEntries = CATEGORIES_WITH_ENTRIES.get(i);
 
             Category category = categoryWithEntries.getCategory();
-            if (category.getType().equals(CategoryType.BASKET)) {
+            if (category.getType().equals(CategoryType.BIN)) {
                 return category;
             }
         }
@@ -146,7 +174,7 @@ public class CategoriesWithEntriesProvider {
                     categoryEntries.add(entry);
                 }
             }
-            if (!categoryEntries.isEmpty() || category.getType().equals(CategoryType.BASKET)) {
+            if (!categoryEntries.isEmpty() || category.getType().equals(CategoryType.BIN)) {
                 addCategory(new CategoryWithEntries(category, categoryEntries));
                 entries.removeAll(categoryEntries);
             }

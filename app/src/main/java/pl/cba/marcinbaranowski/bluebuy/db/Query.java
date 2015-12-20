@@ -52,7 +52,7 @@ class Query {
 
             switch (categoryName) {
                 case "koszyk":
-                    type = CategoryType.BASKET.ordinal();
+                    type = CategoryType.BIN.ordinal();
                     break;
                 case "inne":
                     type = CategoryType.OTHERS.ordinal();
