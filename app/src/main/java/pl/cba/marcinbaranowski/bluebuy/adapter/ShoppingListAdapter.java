@@ -222,4 +222,9 @@ public class ShoppingListAdapter extends BaseExpandableListAdapter {
         categoriesWithEntriesProvider.resetList();
         refreshList();
     }
+
+    public void createNewList() {
+        categoriesWithEntriesProvider.removeAllEntries();
+        refreshList();
+    }
 }

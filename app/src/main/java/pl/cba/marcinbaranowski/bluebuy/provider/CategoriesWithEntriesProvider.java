@@ -116,7 +116,15 @@ public class CategoriesWithEntriesProvider {
                 moveBackToOriginalCategory(entry);
             }
         }
-        refreshList();
+    }
+
+    public void removeAllEntries() {
+        List<Entry> entries = entryProvider.getEntries();
+
+        for (int i = 0; i < entries.size(); ++i) {
+            Entry entry = entries.get(i);
+            entryProvider.removeEntry(entry);
+        }
     }
 
     public void moveAllToBin() {

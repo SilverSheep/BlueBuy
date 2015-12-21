@@ -41,7 +41,7 @@ public class ShoppingListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.shopping_list);
 
-        initializeAddIcon();
+        initializeIcons();
         initializeList();
     }
 
@@ -76,13 +76,21 @@ public class ShoppingListActivity extends AppCompatActivity {
         startActivityForResult(intent, CATEGORY_LIST);
     }
 
-    private void initializeAddIcon() {
+    private void initializeIcons() {
         final ImageView addEntryIcon = (ImageView) findViewById(R.id.add_entry_icon);
+        final ImageView newListIcon = (ImageView) findViewById(R.id.new_list_icon);
 
         addEntryIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                newEntry();
+                addNewEntry();
+            }
+        });
+
+        newListIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createNewList();
             }
         });
     }
@@ -93,6 +101,10 @@ public class ShoppingListActivity extends AppCompatActivity {
         expandableListView.setAdapter(shoppingListAdapter);
     }
 
+    private void createNewList() {
+        shoppingListAdapter.createNewList();
+    }
+
     private void addEntry(Entry entry) {
         entryListAdapter.addEntry(entry);
 
@@ -100,10 +112,9 @@ public class ShoppingListActivity extends AppCompatActivity {
         categoryListAdapter.notifyDataSetChanged();
         entryListAdapter.notifyDataSetChanged();
         shoppingListAdapter.refreshList();
-        shoppingListAdapter.notifyDataSetChanged();
     }
 
-    private void newEntry() {
+    private void addNewEntry() {
         Intent intent = new Intent(this, EntryActivity.class);
         intent.putExtra(REQUEST_CODE, NEW_ENTRY);
         startActivityForResult(intent, NEW_ENTRY);
